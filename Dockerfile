@@ -15,3 +15,6 @@ RUN composer install --no-dev --optimize-autoloader
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
+
+# Start PHP-FPM when the container starts
+CMD ["php-fpm"]
