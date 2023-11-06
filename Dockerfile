@@ -1,5 +1,5 @@
 # Use the official PHP image as the base image
-FROM php:8.1-fpm-alpine
+FROM php:8.1-fpm
 
 # Set the working directory in the container
 WORKDIR /var/www/html
@@ -13,8 +13,16 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install project dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Expose port 9000 for PHP-FPM
-EXPOSE 9000
+# Install nginx
+RUN apt-get update && apt-get install -y \
+  nginx \
+  supervisor
 
-# Start PHP-FPM when the container starts
-CMD ["php-fpm"]
+# Copy Nginx configuration file
+COPY ./conf/default.conf /etc/nginx/sites-available/default
+COPY ./conf/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
+
+# Expose port 80 for Nginx
+EXPOSE 80
+
+CMD ["/usr/bin/supervisord"]
