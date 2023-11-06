@@ -4,6 +4,12 @@ FROM php:8.1-fpm
 # Set the working directory in the container
 WORKDIR /var/www/html
 
+# Install nginx
+RUN apt-get update && apt-get install -y \
+  nginx \
+  supervisor \
+  zip
+  
 # Copy the application files to the container
 COPY ./src /var/www/html/
 
@@ -12,11 +18,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install project dependencies
 RUN composer install --no-dev --optimize-autoloader
-
-# Install nginx
-RUN apt-get update && apt-get install -y \
-  nginx \
-  supervisor
 
 # Copy Nginx configuration file
 COPY ./conf/default.conf /etc/nginx/sites-available/default
