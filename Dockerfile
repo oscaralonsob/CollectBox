@@ -9,9 +9,9 @@ RUN apt-get update && apt-get install -y \
   nginx \
   supervisor \
   zip
-  
+
 # Copy the application files to the container
-COPY ./src /var/www/html/
+COPY ./CollectBox /var/www/html/
 
 # Install Composer (Dependency Manager for PHP)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
