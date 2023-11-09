@@ -8,9 +8,11 @@ use App\Infrastructure\UI\Collectible\GetCollectiblesHandler;
 use App\Infrastructure\UI\Collectible\GetCollectibleHandler;
 use App\Infrastructure\UI\Collectible\PostCollectibleHandler;
 use App\Infrastructure\UI\Collectible\PutCollectibleHandler;
+use App\Infrastructure\UI\Home\HomeHandler;
 
 return static function (App $app) {
-  // Get all collectibles
+  $app->get('/', HomeHandler::class);
+  // Collectibles
   $app->get('/collectibles', GetCollectiblesHandler::class);
   $app->get('/collectible/{id}', GetCollectibleHandler::class);
   $app->post('/collectible', PostCollectibleHandler::class);
