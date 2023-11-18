@@ -15,7 +15,7 @@ class GetCollectiblesHandler implements RequestHandlerInterface
 {
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    $query = new GetCollectiblesQuery();
+    $query = GetCollectiblesQuery::create();
     $queryHandler = new GetCollectiblesQueryHandler();
 
     $result = $queryHandler->execute($query);

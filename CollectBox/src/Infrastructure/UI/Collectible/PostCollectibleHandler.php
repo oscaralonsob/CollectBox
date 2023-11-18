@@ -24,7 +24,7 @@ class PostCollectibleHandler implements RequestHandlerInterface
     if (empty($name) || empty($rarity)) {
       $response->getBody()->write(json_encode(["error" => "Name or rarity missing"], 400));
     } else {
-      $query = new PostCollectibleCommand($name, $rarity);
+      $query = PostCollectibleCommand::create($name, $rarity);
       $queryHandler = new PostCollectibleCommandHandler();
 
       $result = $queryHandler->execute($query);

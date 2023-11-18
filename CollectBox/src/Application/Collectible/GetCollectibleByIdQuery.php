@@ -6,7 +6,12 @@ namespace App\Application\Collectible;
 
 class GetCollectibleByIdQuery
 {
-  public function __construct(private int $id) {}
+  private function __construct(private int $id) {}
+
+  public static function create(int $id): self
+  {
+    return new self($id);
+  }
 
   public function id(): int
   {

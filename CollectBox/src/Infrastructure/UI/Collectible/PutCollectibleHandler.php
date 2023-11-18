@@ -17,7 +17,7 @@ class PutCollectibleHandler implements RequestHandlerInterface
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
-    $id = $request->getAttribute("id");
+    $id = (int) $request->getAttribute("id");
     $name = $request->getParsedBody()['name'];
     $rarity = $request->getParsedBody()['rarity'];
 
@@ -25,7 +25,7 @@ class PutCollectibleHandler implements RequestHandlerInterface
     if (empty($id) || empty($name) || empty($rarity)) {
       $response->getBody()->write(json_encode(["error" => "Id, name or rarity missing"], 400));
     } else {
-      $query = new PutCollectibleCommand($id, $name, $rarity);
+      $query = PutCollectibleCommand::create($id, $name, $rarity);
       $queryHandler = new PutCollectibleCommandHandler();
       $result = $queryHandler->execute($query);
       

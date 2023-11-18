@@ -16,9 +16,9 @@ class DeleteCollectibleHandler implements RequestHandlerInterface
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
-    $id = $request->getAttribute('id');
+    $id = (int) $request->getAttribute('id');
 
-    $query = new DeleteCollectibleByIdCommand($id);
+    $query = DeleteCollectibleByIdCommand::create($id);
     $queryHandler = new DeleteCollectibleByIdCommandHandler();
 
     $result = $queryHandler->execute($query);

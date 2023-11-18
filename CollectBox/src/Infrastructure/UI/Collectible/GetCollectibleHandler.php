@@ -13,17 +13,12 @@ use Slim\Psr7\Response;
 
 class GetCollectibleHandler implements RequestHandlerInterface
 {
-  private $collectibles = [
-    1 => ["id" => 1, "name" => "Collectible 1", "rarity" => "Common"],
-    2 => ["id" => 2, "name" => "Collectible 2", "rarity" => "Rare"]
-  ];
-
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
-    $id = $request->getAttribute('id');
+    $id = (int) $request->getAttribute('id');
 
-    $query = new GetCollectibleByIdQuery($id);
+    $query = GetCollectibleByIdQuery::create($id);
     $queryHandler = new GetCollectibleByIdQueryHandler();
     $result = $queryHandler->execute($query);
 

@@ -6,5 +6,10 @@ namespace App\Application\Collectible;
 
 class GetCollectiblesQuery
 {
-  public function __construct() {}
+  private function __construct() {}
+
+  public static function create(): self
+  {
+    return new self();
+  }
 }

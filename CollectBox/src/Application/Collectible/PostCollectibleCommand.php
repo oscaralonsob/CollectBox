@@ -6,10 +6,15 @@ namespace App\Application\Collectible;
 
 class PostCollectibleCommand
 {
-  public function __construct(
+  private function __construct(
     private string $name,
     private string $rarity
   ) {}
+
+  public static function create(string $name, string $rarity): self
+  {
+    return new self($name, $rarity);
+  }
 
   public function name(): string
   {

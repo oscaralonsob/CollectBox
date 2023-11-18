@@ -6,11 +6,19 @@ namespace App\Domain\Collectible\Aggregate\Root;
 
 class Collectible 
 {
-  public function __construct(
+  private function __construct(
     private int $id,
     private string $name,
     private string $rarity
   ) {
+  }
+  
+  public static function create(
+    int $id,
+    string $name,
+    string $rarity
+  ) {
+    return self::__construct($id, $name, $rarity);
   }
 
   public function id(): int
