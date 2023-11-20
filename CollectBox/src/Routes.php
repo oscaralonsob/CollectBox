@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Infrastructure\UI\Collectible\DeleteCollectibleHandler;
 use Slim\App;
-use App\Infrastructure\UI\Collectible\GetCollectiblesHandler;
-use App\Infrastructure\UI\Collectible\GetCollectibleHandler;
-use App\Infrastructure\UI\Collectible\PostCollectibleHandler;
-use App\Infrastructure\UI\Collectible\PutCollectibleHandler;
-use App\Infrastructure\UI\Home\HomeHandler;
+use App\Collectible\Infrastructure\UI\DeleteCollectibleHandler;
+use App\Collectible\Infrastructure\UI\GetCollectiblesHandler;
+use App\Collectible\Infrastructure\UI\GetCollectibleHandler;
+use App\Collectible\Infrastructure\UI\PostCollectibleHandler;
+use App\Collectible\Infrastructure\UI\PutCollectibleHandler;
+use App\Home\Infrastructure\UI\HomeHandler;
 
 return static function (App $app) {
   $app->get('/', HomeHandler::class);

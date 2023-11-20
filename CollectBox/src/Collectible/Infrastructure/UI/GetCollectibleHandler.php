@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\UI\Collectible;
+namespace App\Collectible\Infrastructure\UI;
 
-use App\Application\Collectible\GetCollectibleByIdQuery;
-use App\Application\Collectible\GetCollectibleByIdQueryHandler;
+use App\Collectible\Application\GetCollectibleByIdQuery;
+use App\Collectible\Application\GetCollectibleByIdQueryHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Collectible;
+namespace App\Collectible\Application;
 
-class GetCollectibleByIdQueryHandler
+class GetCollectiblesQueryHandler
 {
   private array $collectibles = [
     1 => ["id" => 1, "name" => "Collectible 1", "rarity" => "Common"],
     2 => ["id" => 2, "name" => "Collectible 2", "rarity" => "Rare"]
   ];
 
-  public function execute(GetCollectibleByIdQuery $query): array
+  public function execute(GetCollectiblesQuery $query): array
   {
-    return $this->collectibles[$query->id()] ?? [];
+    return $this->collectibles;
   }
 }

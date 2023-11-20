@@ -9,6 +9,6 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 $app->getRouteCollector()->setDefaultInvocationStrategy(new RequestHandler(true));
 
-(require_once __DIR__ . "/src/Infrastructure/Routes.php")($app);
+(require_once __DIR__ . "/src/Routes.php")($app);
 
 $app->run();

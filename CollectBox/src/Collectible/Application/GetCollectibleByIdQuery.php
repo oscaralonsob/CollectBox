@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Collectible;
+namespace App\Collectible\Application;
 
-class DeleteCollectibleByIdCommand
+class GetCollectibleByIdQuery
 {
   private function __construct(private int $id) {}
 

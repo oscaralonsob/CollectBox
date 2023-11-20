@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\UI\Collectible;
+namespace App\Collectible\Infrastructure\UI;
 
-use App\Application\Collectible\PostCollectibleCommand;
-use App\Application\Collectible\PostCollectibleCommandHandler;
+use App\Collectible\Application\PostCollectibleCommand;
+use App\Collectible\Application\PostCollectibleCommandHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

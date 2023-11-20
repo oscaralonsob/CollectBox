@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Collectible\Aggregate\Root;
+namespace App\Collectible\Domain\Aggregate\Root;
 
 class Collectible 
 {
