@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Collectible\Domain\Aggregate\Root;
+namespace App\Collectible\Domain\Aggregate;
 
 class Collectible 
 {
@@ -18,7 +18,7 @@ class Collectible
     string $name,
     string $rarity
   ) {
-    return self::__construct($id, $name, $rarity);
+    return new self($id, $name, $rarity);
   }
 
   public function id(): int
@@ -34,5 +34,14 @@ class Collectible
   public function rarity(): string
   {
     return $this->rarity;
+  }
+
+  public function toArray(): array
+  {
+    return [
+      'id' => $this->id(),
+      'name' => $this->name(),
+      'rarity' => $this->rarity(),
+    ];
   }
 }
