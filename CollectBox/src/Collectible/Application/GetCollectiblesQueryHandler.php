@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace App\Collectible\Application;
 
+use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
+
 class GetCollectiblesQueryHandler
 {
-  private array $collectibles = [
-    1 => ["id" => 1, "name" => "Collectible 1", "rarity" => "Common"],
-    2 => ["id" => 2, "name" => "Collectible 2", "rarity" => "Rare"]
-  ];
+  private CollectibleRepository $collectibleRepository;
+
+  public function __construct()
+  {
+    $this->collectibleRepository = new CollectibleInMemoryRepository(); //TODO: DI
+  }
 
   public function execute(GetCollectiblesQuery $query): array
   {
-    return $this->collectibles;
+    return $this->collectibleRepository->findAll();
   }
 }

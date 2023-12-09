@@ -4,23 +4,27 @@ declare(strict_types=1);
 
 namespace App\Collectible\Application;
 
+use App\Collectible\Domain\Aggregate\Collectible;
+use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
+
 class PostCollectibleCommandHandler
 {
-  private array $collectibles = [
-    1 => ["id" => 1, "name" => "Collectible 1", "rarity" => "Common"],
-    2 => ["id" => 2, "name" => "Collectible 2", "rarity" => "Rare"]
-  ];
+  private CollectibleRepository $collectibleRepository;
 
-  public function execute(PostCollectibleCommand $command): array
+  public function __construct()
   {
-    $newCollectibleId = max(array_keys($this->collectibles)) + 1;
-    $collectible = [
-      "id" => $newCollectibleId,
-      "name" => $command->name(),
-      "rarity" => $command->rarity()
-    ];
-    $this->collectibles[$newCollectibleId] = $collectible;
+    $this->collectibleRepository = new CollectibleInMemoryRepository(); //TODO: DI
+  }
 
-    return $collectible;
+  public function execute(PostCollectibleCommand $command): ?Collectible
+  {
+    $collectible = Collectible::create(
+      0, //this should be migrated to uuid
+      $command->name(),
+      $command->rarity()
+    );
+
+    return $this->collectibleRepository->save($collectible);
   }
 }

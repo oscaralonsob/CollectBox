@@ -19,6 +19,33 @@ class CollectibleInMemoryRepository implements CollectibleRepository
     ];
   }
 
+  public function save(Collectible $collectible): ?Collectible 
+  {
+    if ($collectible->id() == 0) {
+      $newCollectibleId = max(array_keys($this->collectibles)) + 1;
+      $collectible = Collectible::create(
+        $newCollectibleId,
+        $collectible->name(),
+        $collectible->rarity()
+      );
+      $this->collectibles[$newCollectibleId] = $collectible;
+    } else if (isset($this->collectibles[$collectible->id()])) {
+      $this->collectibles[$collectible->id()] = $collectible;    
+    }
+  
+    return $collectible;
+  }
+
+  public function delete(int $collectibleId): array 
+  {
+    return $this->collectibles;
+  }
+
+  public function findAll(): array 
+  {
+    return $this->collectibles;
+  }
+
   public function findById(int $id): ?Collectible 
   {
     return $this->collectibles[$id] ?? null;

@@ -19,9 +19,14 @@ class GetCollectiblesHandler implements RequestHandlerInterface
     $queryHandler = new GetCollectiblesQueryHandler();
 
     $result = $queryHandler->execute($query);
+    $array = [];
+    foreach ($result as $collectible) {
+      $array[] = $collectible->toArray(); //TODO: Collection
+    }
 
     $response = new Response(200);
-    $response->getBody()->write(json_encode($result));
+    $response->getBody()->write(json_encode($array));
+
     return $response;
   }
 }

@@ -28,7 +28,7 @@ class PostCollectibleHandler implements RequestHandlerInterface
       $queryHandler = new PostCollectibleCommandHandler();
 
       $result = $queryHandler->execute($query);
-      $response->getBody()->write(json_encode($result));
+      $response->getBody()->write(json_encode($result->toArray()));
     }
     
     return $response;

@@ -30,7 +30,7 @@ class PutCollectibleHandler implements RequestHandlerInterface
       $result = $queryHandler->execute($query);
       
       if (!empty($result)) {
-        $response->getBody()->write(json_encode($result));  
+        $response->getBody()->write(json_encode($result->toArray()));  
       } else {
         $response->getBody()->write(json_encode(["error" => "Collectible not found"], 404));
       }
