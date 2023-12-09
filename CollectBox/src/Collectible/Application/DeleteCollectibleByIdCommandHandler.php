@@ -11,11 +11,8 @@ class DeleteCollectibleByIdCommandHandler
 {
   private const ID = "ID";
   
-  private CollectibleRepository $collectibleRepository;
-
-  public function __construct()
+  public function __construct(private CollectibleRepository $collectibleRepository)
   {
-    $this->collectibleRepository = new CollectibleInMemoryRepository(); //TODO: DI
   }
 
   public function execute(DeleteCollectibleByIdCommand $command): array

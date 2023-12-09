@@ -13,6 +13,9 @@ use Slim\Psr7\Response;
 
 class PostCollectibleHandler implements RequestHandlerInterface
 {
+  public function __construct(private PostCollectibleCommandHandler $postCollectibleCommandHandler)
+  {
+  }
 
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
@@ -25,9 +28,8 @@ class PostCollectibleHandler implements RequestHandlerInterface
       $response->getBody()->write(json_encode(["error" => "Name or rarity missing"], 400));
     } else {
       $query = PostCollectibleCommand::create($name, $rarity);
-      $queryHandler = new PostCollectibleCommandHandler();
 
-      $result = $queryHandler->execute($query);
+      $result = $this->postCollectibleCommandHandler->execute($query);
       $response->getBody()->write(json_encode($result->toArray()));
     }
     

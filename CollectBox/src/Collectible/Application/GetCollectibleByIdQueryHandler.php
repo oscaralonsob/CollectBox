@@ -9,11 +9,8 @@ use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepos
 
 class GetCollectibleByIdQueryHandler
 {
-  private CollectibleRepository $collectibleRepository;
-
-  public function __construct()
+  public function __construct(private CollectibleRepository $collectibleRepository)
   {
-    $this->collectibleRepository = new CollectibleInMemoryRepository(); //TODO: DI
   }
 
   public function execute(GetCollectibleByIdQuery $query): array

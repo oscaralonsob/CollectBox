@@ -13,14 +13,17 @@ use Slim\Psr7\Response;
 
 class GetCollectibleHandler implements RequestHandlerInterface
 {
+  public function __construct(private GetCollectibleByIdQueryHandler $getCollectibleByIdQueryHandler)
+  {
+  }
+
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
     $id = (int) $request->getAttribute('id');
 
     $query = GetCollectibleByIdQuery::create($id);
-    $queryHandler = new GetCollectibleByIdQueryHandler();
-    $result = $queryHandler->execute($query);
+    $result = $this->getCollectibleByIdQueryHandler->execute($query);
 
     if (!empty($result)) {
       $response->getBody()->write(json_encode($result));  

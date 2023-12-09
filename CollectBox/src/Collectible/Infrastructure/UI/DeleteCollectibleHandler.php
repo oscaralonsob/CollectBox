@@ -13,15 +13,17 @@ use Slim\Psr7\Response;
 
 class DeleteCollectibleHandler implements RequestHandlerInterface
 {
+  public function __construct(private DeleteCollectibleByIdCommandHandler $deleteCollectibleByIdCommandHandler)
+  {
+  }
+  
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
     $id = (int) $request->getAttribute('id');
 
     $query = DeleteCollectibleByIdCommand::create($id);
-    $queryHandler = new DeleteCollectibleByIdCommandHandler();
-
-    $result = $queryHandler->execute($query);
+    $result = $this->deleteCollectibleByIdCommandHandler->execute($query);
 
     $response->getBody()->write(json_encode($result));
     return $response;

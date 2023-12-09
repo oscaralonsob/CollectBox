@@ -13,12 +13,15 @@ use Slim\Psr7\Response;
 
 class GetCollectiblesHandler implements RequestHandlerInterface
 {
+  public function __construct(private GetCollectiblesQueryHandler $getCollectiblesQueryHandler)
+  {
+  }
+  
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $query = GetCollectiblesQuery::create();
-    $queryHandler = new GetCollectiblesQueryHandler();
 
-    $result = $queryHandler->execute($query);
+    $result = $this->getCollectiblesQueryHandler->execute($query);
     $array = [];
     foreach ($result as $collectible) {
       $array[] = $collectible->toArray(); //TODO: Collection
