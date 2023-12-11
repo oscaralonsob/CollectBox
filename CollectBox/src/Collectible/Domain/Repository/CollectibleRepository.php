@@ -10,7 +10,7 @@ interface CollectibleRepository
 {
   public function save(Collectible $collectible): ?Collectible ;
 
-  public function delete(int $collectibleId): array;
+  public function delete(int $collectibleId): int;
 
   public function findAll(): array;
 

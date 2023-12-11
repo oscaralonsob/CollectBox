@@ -36,9 +36,12 @@ class CollectibleInMemoryRepository implements CollectibleRepository
     return $collectible;
   }
 
-  public function delete(int $collectibleId): array 
+  public function delete(int $collectibleId): int 
   {
-    return $this->collectibles;
+    if (isset($this->collectibles[$collectibleId])) {
+      unset($this->collectibles[$collectibleId]);
+    }
+    return $collectibleId;
   }
 
   public function findAll(): array 
