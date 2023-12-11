@@ -14,3 +14,10 @@ ps:
 # Here starts the fun
 tests:
 	docker exec -it collectbox /bin/bash -c "php ./vendor/bin/phpunit --coverage-text"
+
+brt:
+	docker stop collectbox
+	docker rm collectbox
+	docker build -t my-php-app .
+	docker run --name collectbox -d -p 8080:80 my-php-app
+	docker exec -it collectbox /bin/bash -c "php -d memory_limit=256M ./vendor/bin/phpunit --coverage-text --path-coverage"

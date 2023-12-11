@@ -29,11 +29,17 @@ class CollectibleInMemoryRepository implements CollectibleRepository
         $collectible->rarity()
       );
       $this->collectibles[$newCollectibleId] = $collectible;
-    } else if (isset($this->collectibles[$collectible->id()])) {
-      $this->collectibles[$collectible->id()] = $collectible;    
-    }
   
-    return $collectible;
+      return $collectible;
+    } 
+    
+    if (isset($this->collectibles[$collectible->id()])) {
+      $this->collectibles[$collectible->id()] = $collectible;  
+  
+      return $collectible;  
+    }
+
+    return null;
   }
 
   public function delete(int $collectibleId): int 
