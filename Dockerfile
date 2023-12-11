@@ -10,6 +10,11 @@ RUN apt-get update && apt-get install -y \
   supervisor \
   zip
 
+# Install xdebug correctly
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+RUN echo xdebug.mode=coverage > /usr/local/etc/php/conf.d/xdebug.ini 
+
 # Copy the application files to the container
 COPY ./CollectBox /var/www/html/
 
@@ -17,7 +22,7 @@ COPY ./CollectBox /var/www/html/
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install project dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Copy Nginx configuration file
 COPY ./conf/default.conf /etc/nginx/sites-available/default
