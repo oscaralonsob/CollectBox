@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Collectible\Application;
 
+use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
 
 class GetCollectibleByIdQueryHandler
 {
@@ -13,8 +13,9 @@ class GetCollectibleByIdQueryHandler
   {
   }
 
-  public function execute(GetCollectibleByIdQuery $query): array
+  //TODO: return collectible
+  public function execute(GetCollectibleByIdQuery $query): ?Collectible
   {
-    return $this->collectibleRepository->findById($query->id())?->toArray() ?? [];
+    return $this->collectibleRepository->findById($query->id());
   }
 }
