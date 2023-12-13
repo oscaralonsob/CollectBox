@@ -6,8 +6,6 @@ namespace Tests\Unit\Collectible\Application;
 
 use App\Collectible\Application\GetCollectibleByIdQuery;
 use App\Collectible\Application\GetCollectibleByIdQueryHandler;
-use App\Collectible\Application\GetCollectiblesQuery;
-use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -24,7 +22,15 @@ class GetCollectibleByIdQueryHandlerTest extends TestCase
     $this->getCollectibleByIdQueryHandler = new GetCollectibleByIdQueryHandler($this->collectibleRepository);
   }
 
-  public function testACollectionIsReturned(): void
+  public function testFindByIdIsCalled(): void
+  {
+    $collectible = Collectible::create(1, "testName", "testRarity");
+    $this->collectibleRepository->expects($this->once())->method('findById')->willReturn($collectible);
+
+    $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()));
+  }
+
+  public function testACollectibleIsReturned(): void
   {
     $collectible = Collectible::create(1, "testName", "testRarity");
     $this->collectibleRepository->method('findById')->willReturn($collectible);
@@ -34,7 +40,7 @@ class GetCollectibleByIdQueryHandlerTest extends TestCase
     $this->assertEquals($collectible, $result);
   }
 
-  public function testNoCollectionIsReturned(): void
+  public function testNoCollectibleIsReturned(): void
   {
     $this->collectibleRepository->method('findById')->willReturn(null);
 

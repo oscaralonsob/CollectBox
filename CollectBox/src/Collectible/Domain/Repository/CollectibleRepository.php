@@ -10,9 +10,9 @@ interface CollectibleRepository
 {
   public function save(Collectible $collectible): ?Collectible ;
 
-  public function delete(int $collectibleId): int;
+  public function delete(int $collectibleId): int; //TODO: change to uuid
 
-  public function findAll(): array;
+  public function findAll(): array; //TODO: return collection
 
   public function findById(int $id): ?Collectible;
 } 
