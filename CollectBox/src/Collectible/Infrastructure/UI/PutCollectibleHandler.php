@@ -26,7 +26,8 @@ class PutCollectibleHandler implements RequestHandlerInterface
 
     //TODO: delegate responsibility to create
     if (empty($id) || empty($name) || empty($rarity)) {
-      $response->getBody()->write(json_encode(["error" => "Id, name or rarity missing"], 400));
+      $response->getBody()->write(json_encode(["error" => "Id, name or rarity missing"]));
+      $response = $response->withStatus(500);
     } else {
       $query = PutCollectibleCommand::create($id, $name, $rarity);
       $result = $this->putCollectibleCommandHandler->execute($query);
@@ -34,7 +35,8 @@ class PutCollectibleHandler implements RequestHandlerInterface
       if (!empty($result)) {
         $response->getBody()->write(json_encode($result->toArray()));  
       } else {
-        $response->getBody()->write(json_encode(["error" => "Collectible not found"], 404));
+        $response->getBody()->write(json_encode(["error" => "Collectible not found"]));
+        $response = $response->withStatus(404);
       }
     }
     
