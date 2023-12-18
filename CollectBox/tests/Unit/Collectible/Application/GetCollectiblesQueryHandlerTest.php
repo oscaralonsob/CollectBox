@@ -9,6 +9,7 @@ use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -28,13 +29,13 @@ class GetCollectiblesQueryHandlerTest extends TestCase
     $collectibles = [
       Collectible::create(
         DomainId::createRandom(), 
-        "testName", 
-        "testRarity"
+        NonEmptyString::create("testName"),
+        NonEmptyString::create("testRarity")
       ), 
       Collectible::create(
         DomainId::createRandom(), 
-        "testName2", 
-        "testRarity2"
+        NonEmptyString::create("testName2"), 
+        NonEmptyString::create("testRarity2")
       )
     ];
     $this->collectibleRepository->expects($this->once())->method('findAll')->willReturn($collectibles);
@@ -47,13 +48,13 @@ class GetCollectiblesQueryHandlerTest extends TestCase
     $collectibles = [
       Collectible::create(
         DomainId::createRandom(), 
-        "testName", 
-        "testRarity"
+        NonEmptyString::create("testName"), 
+        NonEmptyString::create("testRarity")
       ), 
       Collectible::create(
         DomainId::createRandom(), 
-        "testName2", 
-        "testRarity2"
+        NonEmptyString::create("testName2"), 
+        NonEmptyString::create("testRarity2")
       )
     ];
     $this->collectibleRepository->method('findAll')->willReturn($collectibles);

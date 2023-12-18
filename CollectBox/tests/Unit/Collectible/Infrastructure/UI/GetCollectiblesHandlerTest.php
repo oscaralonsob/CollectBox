@@ -8,6 +8,7 @@ use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\GetCollectiblesHandler;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -30,8 +31,8 @@ class GetCollectiblesHandlerTest extends TestCase
     $collectibles = [
       Collectible::create(
         DomainId::createRandom(),
-        'testName', 
-        'testRarity'
+        NonEmptyString::create('testName'),
+        NonEmptyString::create('testRarity')
       )
     ];
     $this->request->method('getAttribute')->willReturn(DomainId::createRandom());
@@ -60,13 +61,13 @@ class GetCollectiblesHandlerTest extends TestCase
     $collectibles = [
       Collectible::create(
         DomainId::createRandom(),
-        'testName', 
-        'testRarity'
+        NonEmptyString::create('testName'),
+        NonEmptyString::create('testRarity')
       ),
       Collectible::create(
         DomainId::createRandom(),
-        'testName2', 
-        'testRarity2'
+        NonEmptyString::create('testName2'), 
+        NonEmptyString::create('testRarity2')
       )
     ];
     $this->request->method('getAttribute')->willReturn(DomainId::createRandom());

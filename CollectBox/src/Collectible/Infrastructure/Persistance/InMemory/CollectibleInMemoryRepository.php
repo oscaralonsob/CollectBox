@@ -7,6 +7,7 @@ namespace App\Collectible\Infrastructure\Persistance\InMemory;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
 class CollectibleInMemoryRepository implements CollectibleRepository
 {
@@ -15,21 +16,20 @@ class CollectibleInMemoryRepository implements CollectibleRepository
   public function __construct()
   {
     $this->collectibles = [
-      "ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0" => Collectible::create(DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0"), "Collectible 1", "Common"),
-      "7982e692-dd0b-49c6-a08c-0776b39e9e6c" => Collectible::create(DomainId::create("7982e692-dd0b-49c6-a08c-0776b39e9e6c"), "Collectible 2", "Rare"),
+      "ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0" => Collectible::create(DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0"), NonEmptyString::create("Collectible 1"), NonEmptyString::create("Common")),
+      "7982e692-dd0b-49c6-a08c-0776b39e9e6c" => Collectible::create(DomainId::create("7982e692-dd0b-49c6-a08c-0776b39e9e6c"), NonEmptyString::create("Collectible 2"), NonEmptyString::create("Rare")),
     ];
   }
 
   public function save(Collectible $collectible): ?Collectible 
   {
     if (!isset($this->collectibles[$collectible->id()->value()])) {
-      $newCollectibleId = DomainId::createRandom();
       $collectible = Collectible::create(
-        $newCollectibleId,
+        $collectible->id(),
         $collectible->name(),
         $collectible->rarity()
       );
-      $this->collectibles[$newCollectibleId->value()] = $collectible;
+      $this->collectibles[$collectible->id()->value()] = $collectible;
   
       return $collectible;
     }else {

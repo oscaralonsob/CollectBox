@@ -9,6 +9,7 @@ use App\Collectible\Application\PostCollectibleCommandHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -34,12 +35,12 @@ class PostCollectibleCommandHandlerTest extends TestCase
   {
     $collectible = Collectible::create(
       DomainId::createRandom(), 
-      "testName", 
-      "testRarity"
+      NonEmptyString::create("testName"), 
+      NonEmptyString::create("testRarity")
     );
     $this->collectibleRepository->method('save')->willReturn($collectible);
 
-    $result = $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create($collectible->name(), $collectible->rarity()));
+    $result = $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create($collectible->name()->value(), $collectible->rarity()->value()));
     
     $this->assertEquals($collectible, $result);
   }

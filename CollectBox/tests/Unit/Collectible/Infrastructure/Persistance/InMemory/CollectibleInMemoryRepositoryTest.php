@@ -7,6 +7,7 @@ namespace Tests\Unit\Collectible\Infrastructure\Persistance\InMemory;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\TestCase;
 
 class CollectibleInMemoryRepositoryTest extends TestCase
@@ -20,7 +21,7 @@ class CollectibleInMemoryRepositoryTest extends TestCase
 
   public function testSaveInsert(): void 
   {
-    $collectible = Collectible::create(DomainId::createRandom(), "testName", "testRarity");
+    $collectible = Collectible::create(DomainId::createRandom(), NonEmptyString::create("testName"), NonEmptyString::create("testRarity"));
 
     $this->collectibleInMemoryRepository->save($collectible);
 
@@ -30,7 +31,7 @@ class CollectibleInMemoryRepositoryTest extends TestCase
   public function testSaveUpdateWhenDoesExist(): void 
   {
     $id = DomainId::create("7982e692-dd0b-49c6-a08c-0776b39e9e6c");
-    $collectible = Collectible::create($id, "testName", "testRarity");
+    $collectible = Collectible::create($id, NonEmptyString::create("testName"), NonEmptyString::create("testRarity"));
 
     $this->collectibleInMemoryRepository->save($collectible);
 
@@ -60,7 +61,7 @@ class CollectibleInMemoryRepositoryTest extends TestCase
   public function testFindByIdWhenDoesExist(): void 
   {
     $id = DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0");
-    $collectible = Collectible::create($id, "Collectible 1", "Common");
+    $collectible = Collectible::create($id, NonEmptyString::create("Collectible 1"), NonEmptyString::create("Common"));
     $this->assertEquals($collectible->toArray(), $this->collectibleInMemoryRepository->findById($id)->toArray());
   }
 

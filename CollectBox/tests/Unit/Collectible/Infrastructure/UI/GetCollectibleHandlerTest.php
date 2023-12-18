@@ -8,6 +8,7 @@ use App\Collectible\Application\GetCollectibleByIdQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\GetCollectibleHandler;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,8 +30,8 @@ class GetCollectibleHandlerTest extends TestCase
   {
     $collectible = Collectible::create(
       DomainId::createRandom(), 
-      "testName", 
-      "testRarity"
+      NonEmptyString::create("testName"), 
+      NonEmptyString::create("testRarity")
     );
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn($collectible);
@@ -45,8 +46,8 @@ class GetCollectibleHandlerTest extends TestCase
   {
     $collectible = Collectible::create(
       DomainId::createRandom(), 
-      "testName", 
-      "testRarity"
+      NonEmptyString::create("testName"), 
+      NonEmptyString::create("testRarity")
     );
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn($collectible);

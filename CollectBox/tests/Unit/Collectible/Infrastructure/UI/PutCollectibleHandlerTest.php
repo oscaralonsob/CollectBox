@@ -8,6 +8,7 @@ use App\Collectible\Application\PutCollectibleCommandHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\PutCollectibleHandler;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,8 +30,8 @@ class PutCollectibleHandlerTest extends TestCase
   {
     $collectible = Collectible::create(
       DomainId::createRandom(), 
-      'testName', 
-      'testRarity'
+      NonEmptyString::create('testName'), 
+      NonEmptyString::create('testRarity')
     );
     $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
     $this->request->method('getParsedBody')->willReturn([
@@ -49,8 +50,8 @@ class PutCollectibleHandlerTest extends TestCase
   {
     $collectible = Collectible::create(
       DomainId::createRandom(), 
-      'testName', 
-      'testRarity'
+      NonEmptyString::create('testName'), 
+      NonEmptyString::create('testRarity')
     );    
     $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
     $this->request->method('getParsedBody')->willReturn([

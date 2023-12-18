@@ -9,6 +9,7 @@ use App\Collectible\Application\PutCollectibleCommandHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -27,12 +28,12 @@ class PutCollectibleCommandHandlerTest extends TestCase
   {
     $collectible = Collectible::create(
       DomainId::createRandom(), 
-      "testName", 
-      "testRarity"
+      NonEmptyString::create("testName"),
+      NonEmptyString::create("testRarity")
     );
     $this->collectibleRepository->expects($this->once())->method('save')->willReturn($collectible);
 
-    $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name(), $collectible->rarity()));
+    $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->rarity()->value()));
   }
 
   public function testCollectibleIsReturned(): void
@@ -40,12 +41,12 @@ class PutCollectibleCommandHandlerTest extends TestCase
     
     $collectible = Collectible::create(
       DomainId::createRandom(), 
-      "testName", 
-      "testRarity"
+      NonEmptyString::create("testName"), 
+      NonEmptyString::create("testRarity")
     );
     $this->collectibleRepository->method('save')->willReturn($collectible);
 
-    $result = $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name(), $collectible->rarity()));
+    $result = $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->rarity()->value()));
     
     $this->assertEquals($collectible, $result);
   }
