@@ -14,7 +14,6 @@ class CollectibleInMemoryRepository implements CollectibleRepository
 
   public function __construct()
   {
-    //TODO: change to no indexable (loop to delete update)
     $this->collectibles = [
       "ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0" => Collectible::create(DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0"), "Collectible 1", "Common"),
       "7982e692-dd0b-49c6-a08c-0776b39e9e6c" => Collectible::create(DomainId::create("7982e692-dd0b-49c6-a08c-0776b39e9e6c"), "Collectible 2", "Rare"),
