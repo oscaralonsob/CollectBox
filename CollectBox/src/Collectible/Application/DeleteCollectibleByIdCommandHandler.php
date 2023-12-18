@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 class DeleteCollectibleByIdCommandHandler
 { 
@@ -13,10 +13,10 @@ class DeleteCollectibleByIdCommandHandler
   {
   }
 
-  public function execute(DeleteCollectibleByIdCommand $command): int
+  public function execute(DeleteCollectibleByIdCommand $command): DomainId
   {
-    $this->collectibleRepository->delete($command->id());
+    $id = $this->collectibleRepository->delete(DomainId::create($command->id()));
 
-    return $command->id();
+    return $id;
   }
 }

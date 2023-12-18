@@ -22,12 +22,12 @@ class DeleteCollectibleHandler implements RequestHandlerInterface
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
-    $id = (int) $request->getAttribute('id');
+    $id = $request->getAttribute('id');
 
     $query = DeleteCollectibleByIdCommand::create($id);
     $result = $this->deleteCollectibleByIdCommandHandler->execute($query);
 
-    $response->getBody()->write(json_encode([self::ID => $result]));
+    $response->getBody()->write(json_encode([self::ID => $result->value()]));
     return $response;
   }
 }

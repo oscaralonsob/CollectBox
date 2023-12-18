@@ -7,11 +7,12 @@ namespace Tests\Unit\Collectible\Infrastructure\UI;
 use App\Collectible\Application\PutCollectibleCommandHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\PutCollectibleHandler;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
-class PutCollectiblesHandlerTest extends TestCase
+class PutCollectibleHandlerTest extends TestCase
 {
   private ServerRequestInterface|MockObject $request;
   private PutCollectibleCommandHandler|MockObject $putCollectibleCommandHandler;
@@ -26,8 +27,12 @@ class PutCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn200(): void
   {
-    $collectible = Collectible::create(1, 'testName', 'testRarity');
-    $this->request->method('getAttribute')->willReturn(1);
+    $collectible = Collectible::create(
+      DomainId::createRandom(), 
+      'testName', 
+      'testRarity'
+    );
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
     $this->request->method('getParsedBody')->willReturn([
       'name' => 'testName',
       'rarity' => 'testRarity',
@@ -42,8 +47,12 @@ class PutCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturnCollectible(): void
   {
-    $collectible = Collectible::create(1, 'testName', 'testRarity');
-    $this->request->method('getAttribute')->willReturn(1);
+    $collectible = Collectible::create(
+      DomainId::createRandom(), 
+      'testName', 
+      'testRarity'
+    );    
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
     $this->request->method('getParsedBody')->willReturn([
       'name' => 'testName',
       'rarity' => 'testRarity',
@@ -58,7 +67,7 @@ class PutCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn404WhenDoesNotExist(): void
   {
-    $this->request->method('getAttribute')->willReturn(1);
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
     $this->request->method('getParsedBody')->willReturn([
       'name' => 'testName',
       'rarity' => 'testRarity',
@@ -86,7 +95,7 @@ class PutCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn500WhenNoNameProvided(): void
   {
-    $this->request->method('getAttribute')->willReturn(1);
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
     $this->request->method('getParsedBody')->willReturn([
       'name' => '',
       'rarity' => 'testRarity',
@@ -100,7 +109,7 @@ class PutCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn500WhenNoRarityProvided(): void
   {
-    $this->request->method('getAttribute')->willReturn(1);
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
     $this->request->method('getParsedBody')->willReturn([
       'name' => 'testName',
       'rarity' => '',

@@ -20,7 +20,7 @@ class PutCollectibleHandler implements RequestHandlerInterface
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
-    $id = (int) $request->getAttribute("id");
+    $id = $request->getAttribute("id");
     $name = $request->getParsedBody()['name'];
     $rarity = $request->getParsedBody()['rarity'];
 

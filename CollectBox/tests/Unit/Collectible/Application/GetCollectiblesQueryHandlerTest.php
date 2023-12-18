@@ -8,6 +8,7 @@ use App\Collectible\Application\GetCollectiblesQuery;
 use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +25,18 @@ class GetCollectiblesQueryHandlerTest extends TestCase
 
   public function testFindAllIsCalled(): void
   {
-    $collectibles = [Collectible::create(1, "testName", "testRarity"), Collectible::create(2, "testName2", "testRarity2")];
+    $collectibles = [
+      Collectible::create(
+        DomainId::createRandom(), 
+        "testName", 
+        "testRarity"
+      ), 
+      Collectible::create(
+        DomainId::createRandom(), 
+        "testName2", 
+        "testRarity2"
+      )
+    ];
     $this->collectibleRepository->expects($this->once())->method('findAll')->willReturn($collectibles);
 
     $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());
@@ -32,7 +44,18 @@ class GetCollectiblesQueryHandlerTest extends TestCase
 
   public function testCollectiblesAreReturned(): void
   {
-    $collectibles = [Collectible::create(1, "testName", "testRarity"), Collectible::create(2, "testName2", "testRarity2")];
+    $collectibles = [
+      Collectible::create(
+        DomainId::createRandom(), 
+        "testName", 
+        "testRarity"
+      ), 
+      Collectible::create(
+        DomainId::createRandom(), 
+        "testName2", 
+        "testRarity2"
+      )
+    ];
     $this->collectibleRepository->method('findAll')->willReturn($collectibles);
 
     $result = $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());

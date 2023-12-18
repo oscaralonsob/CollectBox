@@ -7,17 +7,17 @@ namespace App\Collectible\Application;
 class PutCollectibleCommand
 {
   private function __construct(
-    private int $id,
+    private string $id,
     private ?string $name,
     private ?string $rarity
   ) {}
 
-  public static function create(int $id, ?string $name, ?string $rarity): self
+  public static function create(string $id, ?string $name, ?string $rarity): self
   {
     return new self($id, $name, $rarity);
   }
 
-  public function id(): int
+  public function id(): string
   {
     return $this->id;
   }

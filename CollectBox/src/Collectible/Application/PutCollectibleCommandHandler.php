@@ -6,7 +6,7 @@ namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 class PutCollectibleCommandHandler
 {
@@ -16,8 +16,9 @@ class PutCollectibleCommandHandler
 
   public function execute(PutCollectibleCommand $command): ?Collectible
   {
+    //TODO: check if exists
     $collectible = Collectible::create(
-      $command->id(),
+      DomainId::create($command->id()),
       $command->name(),
       $command->rarity()
     );

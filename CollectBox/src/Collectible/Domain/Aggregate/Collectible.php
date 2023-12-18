@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace App\Collectible\Domain\Aggregate;
 
+use App\Shared\Domain\Entity\ValueObject\DomainId;
+
 class Collectible 
 {
   private function __construct(
-    private int $id,
+    private DomainId $id,
     private string $name,
     private string $rarity
   ) {
   }
   
   public static function create(
-    int $id,
+    DomainId $id,
     string $name,
     string $rarity
   ) {
     return new self($id, $name, $rarity);
   }
 
-  public function id(): int
+  public function id(): DomainId
   {
     return $this->id;
   }
@@ -39,7 +41,7 @@ class Collectible
   public function toArray(): array
   {
     return [
-      'id' => $this->id(),
+      'id' => $this->id()->value(),
       'name' => $this->name(),
       'rarity' => $this->rarity(),
     ];

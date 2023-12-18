@@ -6,6 +6,7 @@ namespace Tests\Unit\Collectible\Domain\Entity;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleCollection;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use App\Shared\Domain\Exception\CollectionInvalidTypeException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -18,9 +19,9 @@ class CollectibleCollectionTest extends TestCase
 
   public function setUp(): void
   {
-    $this->collectible1 = Collectible::create(1, 'testName', 'testRarity');
-    $this->collectible2 = Collectible::create(2, 'testName 2', 'testRarity 2');
-    $this->collectible3 = Collectible::create(3, 'testName 3', 'testRarity 3');
+    $this->collectible1 = Collectible::create(DomainId::createRandom(), 'testName', 'testRarity');
+    $this->collectible2 = Collectible::create(DomainId::createRandom(), 'testName 2', 'testRarity 2');
+    $this->collectible3 = Collectible::create(DomainId::createRandom(), 'testName 3', 'testRarity 3');
   }
 
   public function testCollectionCreation(): void
@@ -48,7 +49,7 @@ class CollectibleCollectionTest extends TestCase
   public function testAddToWrongCollection(): void
   {
     $this->expectException(CollectionInvalidTypeException::class);
-    
+
     $testCollection = CollectibleCollection::create([$this->collectible1, $this->collectible2]);
     $testCollection->add(new stdClass());
   }

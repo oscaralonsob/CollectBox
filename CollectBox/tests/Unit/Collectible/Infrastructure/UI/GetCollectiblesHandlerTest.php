@@ -7,6 +7,7 @@ namespace Tests\Unit\Collectible\Infrastructure\UI;
 use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\GetCollectiblesHandler;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -26,8 +27,14 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn200(): void
   {
-    $collectibles = [Collectible::create(1, 'testName', 'testRarity'), Collectible::create(2, 'testName2', 'testRarity2')];
-    $this->request->method('getAttribute')->willReturn(1);
+    $collectibles = [
+      Collectible::create(
+        DomainId::createRandom(),
+        'testName', 
+        'testRarity'
+      )
+    ];
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom());
     $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
 
     $response = $this->getCollectiblesHandler->handle($this->request);
@@ -39,7 +46,7 @@ class GetCollectiblesHandlerTest extends TestCase
   public function testHandlerReturn200WhenEmpty(): void
   {
     $collectibles = [];
-    $this->request->method('getAttribute')->willReturn(1);
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom());
     $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
 
     $response = $this->getCollectiblesHandler->handle($this->request);
@@ -50,8 +57,19 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturnCollectibles(): void
   {
-    $collectibles = [Collectible::create(1, 'testName', 'testRarity'), Collectible::create(2, 'testName2', 'testRarity2')];
-    $this->request->method('getAttribute')->willReturn(1);
+    $collectibles = [
+      Collectible::create(
+        DomainId::createRandom(),
+        'testName', 
+        'testRarity'
+      ),
+      Collectible::create(
+        DomainId::createRandom(),
+        'testName2', 
+        'testRarity2'
+      )
+    ];
+    $this->request->method('getAttribute')->willReturn(DomainId::createRandom());
     $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
 
     $response = $this->getCollectiblesHandler->handle($this->request);

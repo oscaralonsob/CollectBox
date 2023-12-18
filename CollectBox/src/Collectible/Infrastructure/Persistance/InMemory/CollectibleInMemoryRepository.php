@@ -6,6 +6,7 @@ namespace App\Collectible\Infrastructure\Persistance\InMemory;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 class CollectibleInMemoryRepository implements CollectibleRepository
 {
@@ -13,39 +14,36 @@ class CollectibleInMemoryRepository implements CollectibleRepository
 
   public function __construct()
   {
+    //TODO: change to no indexable (loop to delete update)
     $this->collectibles = [
-      1 => Collectible::create(1, "Collectible 1", "Common"),
-      2 => Collectible::create(2, "Collectible 2", "Rare"),
+      "ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0" => Collectible::create(DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0"), "Collectible 1", "Common"),
+      "7982e692-dd0b-49c6-a08c-0776b39e9e6c" => Collectible::create(DomainId::create("7982e692-dd0b-49c6-a08c-0776b39e9e6c"), "Collectible 2", "Rare"),
     ];
   }
 
   public function save(Collectible $collectible): ?Collectible 
   {
-    if ($collectible->id() == 0) {
-      $newCollectibleId = max(array_keys($this->collectibles)) + 1;
+    if (!isset($this->collectibles[$collectible->id()->value()])) {
+      $newCollectibleId = DomainId::createRandom();
       $collectible = Collectible::create(
         $newCollectibleId,
         $collectible->name(),
         $collectible->rarity()
       );
-      $this->collectibles[$newCollectibleId] = $collectible;
+      $this->collectibles[$newCollectibleId->value()] = $collectible;
   
       return $collectible;
-    } 
-    
-    if (isset($this->collectibles[$collectible->id()])) {
-      $this->collectibles[$collectible->id()] = $collectible;  
+    }else {
+      $this->collectibles[$collectible->id()->value()] = $collectible;  
   
       return $collectible;  
     }
-
-    return null;
   }
 
-  public function delete(int $collectibleId): int 
+  public function delete(DomainId $collectibleId): DomainId 
   {
-    if (isset($this->collectibles[$collectibleId])) {
-      unset($this->collectibles[$collectibleId]);
+    if (isset($this->collectibles[$collectibleId->value()])) {
+      unset($this->collectibles[$collectibleId->value()]);
     }
     return $collectibleId;
   }
@@ -55,8 +53,8 @@ class CollectibleInMemoryRepository implements CollectibleRepository
     return $this->collectibles;
   }
 
-  public function findById(int $id): ?Collectible 
+  public function findById(DomainId $id): ?Collectible 
   {
-    return $this->collectibles[$id] ?? null;
+    return $this->collectibles[$id->value()] ?? null;
   }
 } 

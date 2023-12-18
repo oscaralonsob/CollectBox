@@ -8,6 +8,7 @@ use App\Collectible\Application\DeleteCollectibleByIdCommand;
 use App\Collectible\Application\DeleteCollectibleByIdCommandHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -24,18 +25,26 @@ class DeleteCollectibleByIdCommandHandlerTest extends TestCase
 
   public function testDeleteIsCalled(): void
   {
-    $collectible = Collectible::create(1, "testName", "testRarity");
+    $collectible = Collectible::create(
+      DomainId::createRandom(), 
+      "testName", 
+      "testRarity"
+    );
     $this->collectibleRepository->expects($this->once())->method('delete')->willReturn($collectible->id());
 
-    $this->deleteCollectibleByIdCommandHandler->execute(DeleteCollectibleByIdCommand::create($collectible->id()));
+    $this->deleteCollectibleByIdCommandHandler->execute(DeleteCollectibleByIdCommand::create($collectible->id()->value()));
   }
 
   public function testIdIsReturned(): void
   {
-    $collectible = Collectible::create(1, "testName", "testRarity");
+    $collectible = Collectible::create(
+      DomainId::createRandom(), 
+      "testName", 
+      "testRarity"
+    );
     $this->collectibleRepository->method('delete')->willReturn($collectible->id());
 
-    $result = $this->deleteCollectibleByIdCommandHandler->execute(DeleteCollectibleByIdCommand::create($collectible->id()));
+    $result = $this->deleteCollectibleByIdCommandHandler->execute(DeleteCollectibleByIdCommand::create($collectible->id()->value()));
 
     $this->assertEquals($collectible->id(), $result);
   }

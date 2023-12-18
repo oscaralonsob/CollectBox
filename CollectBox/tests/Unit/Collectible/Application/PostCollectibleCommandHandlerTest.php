@@ -8,6 +8,7 @@ use App\Collectible\Application\PostCollectibleCommand;
 use App\Collectible\Application\PostCollectibleCommandHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -24,15 +25,18 @@ class PostCollectibleCommandHandlerTest extends TestCase
 
   public function testSaveIsCalled(): void
   {
-    $collectible = Collectible::create(0, "testName", "testRarity");
-    $this->collectibleRepository->expects($this->once())->method('save')->willReturn($collectible);
+    $this->collectibleRepository->expects($this->once())->method('save');
 
-    $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create($collectible->name(), $collectible->rarity()));
+    $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create("testName", "testRarity"));
   }
 
   public function testCollectibleIsReturned(): void
   {
-    $collectible = Collectible::create(0, "testName", "testRarity");
+    $collectible = Collectible::create(
+      DomainId::createRandom(), 
+      "testName", 
+      "testRarity"
+    );
     $this->collectibleRepository->method('save')->willReturn($collectible);
 
     $result = $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create($collectible->name(), $collectible->rarity()));

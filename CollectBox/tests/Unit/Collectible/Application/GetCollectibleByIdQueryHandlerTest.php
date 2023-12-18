@@ -8,6 +8,7 @@ use App\Collectible\Application\GetCollectibleByIdQuery;
 use App\Collectible\Application\GetCollectibleByIdQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -24,18 +25,26 @@ class GetCollectibleByIdQueryHandlerTest extends TestCase
 
   public function testFindByIdIsCalled(): void
   {
-    $collectible = Collectible::create(1, "testName", "testRarity");
+    $collectible = Collectible::create(
+      DomainId::createRandom(), 
+      "testName", 
+      "testRarity"
+    );
     $this->collectibleRepository->expects($this->once())->method('findById')->willReturn($collectible);
 
-    $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()));
+    $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()->value()));
   }
 
   public function testACollectibleIsReturned(): void
   {
-    $collectible = Collectible::create(1, "testName", "testRarity");
+    $collectible = Collectible::create(
+      DomainId::createRandom(),
+      "testName",
+      "testRarity"
+    );
     $this->collectibleRepository->method('findById')->willReturn($collectible);
 
-    $result = $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()));
+    $result = $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()->value()));
 
     $this->assertEquals($collectible, $result);
   }
@@ -44,7 +53,7 @@ class GetCollectibleByIdQueryHandlerTest extends TestCase
   {
     $this->collectibleRepository->method('findById')->willReturn(null);
 
-    $result = $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create(1));
+    $result = $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create(DomainId::createRandom()->value()));
 
     $this->assertNull($result);
   }

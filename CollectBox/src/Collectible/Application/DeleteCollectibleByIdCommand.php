@@ -6,14 +6,14 @@ namespace App\Collectible\Application;
 
 class DeleteCollectibleByIdCommand
 {
-  private function __construct(private int $id) {}
+  private function __construct(private string $id) {}
 
-  public static function create(int $id): self
+  public static function create(string $id): self
   {
     return new self($id);
   }
 
-  public function id(): int
+  public function id(): string
   {
     return $this->id;
   }

@@ -6,6 +6,7 @@ namespace Tests\Unit\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\DeleteCollectibleByIdCommandHandler;
 use App\Collectible\Infrastructure\UI\DeleteCollectibleHandler;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -25,12 +26,13 @@ class DeleteCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturnId(): void
   {
-    $this->request->method('getAttribute')->willReturn(1);
-    $this->deleteCollectibleByIdCommandHandler->method('execute')->willReturn(1);
+    $id = DomainId::createRandom();
+    $this->request->method('getAttribute')->willReturn($id->value());
+    $this->deleteCollectibleByIdCommandHandler->method('execute')->willReturn($id );
 
     $response = $this->deleteCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();
 
-    $this->assertEquals(["ID" => 1], json_decode($response->getBody()->getContents(), true));
+    $this->assertEquals(["ID" => $id->value()], json_decode($response->getBody()->getContents(), true));
   }
 }

@@ -7,6 +7,7 @@ namespace App\Collectible\Application;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 class PostCollectibleCommandHandler
 {
@@ -17,7 +18,7 @@ class PostCollectibleCommandHandler
   public function execute(PostCollectibleCommand $command): ?Collectible
   {
     $collectible = Collectible::create(
-      0, //this should be migrated to uuid
+      DomainId::createRandom(),
       $command->name(),
       $command->rarity()
     );

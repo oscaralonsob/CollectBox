@@ -6,6 +6,7 @@ namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 class GetCollectibleByIdQueryHandler
 {
@@ -16,6 +17,6 @@ class GetCollectibleByIdQueryHandler
   //TODO: return collectible
   public function execute(GetCollectibleByIdQuery $query): ?Collectible
   {
-    return $this->collectibleRepository->findById($query->id());
+    return $this->collectibleRepository->findById(DomainId::create($query->id()));
   }
 }

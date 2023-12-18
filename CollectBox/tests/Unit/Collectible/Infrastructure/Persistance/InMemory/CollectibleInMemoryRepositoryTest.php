@@ -6,6 +6,7 @@ namespace Tests\Unit\Collectible\Infrastructure\Persistance\InMemory;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
+use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PHPUnit\Framework\TestCase;
 
 class CollectibleInMemoryRepositoryTest extends TestCase
@@ -19,41 +20,34 @@ class CollectibleInMemoryRepositoryTest extends TestCase
 
   public function testSaveInsert(): void 
   {
-    $collectible = Collectible::create(0, "testName", "testRarity");
+    $collectible = Collectible::create(DomainId::createRandom(), "testName", "testRarity");
 
     $this->collectibleInMemoryRepository->save($collectible);
 
     $this->assertCount(3, $this->collectibleInMemoryRepository->findAll());
   }
 
-  public function testSaveUpdateWhenDesExist(): void 
+  public function testSaveUpdateWhenDoesExist(): void 
   {
-    $collectible = Collectible::create(1, "testName", "testRarity");
+    $id = DomainId::create("7982e692-dd0b-49c6-a08c-0776b39e9e6c");
+    $collectible = Collectible::create($id, "testName", "testRarity");
 
     $this->collectibleInMemoryRepository->save($collectible);
 
-    $this->assertSame($collectible->toArray(), $this->collectibleInMemoryRepository->findById(1)->toArray());
-  }
-
-  public function testSaveUpdateWhenDesNotExist(): void 
-  {
-    $collectible = Collectible::create(100, "testName", "testRarity");
-
-    $response = $this->collectibleInMemoryRepository->save($collectible);
-
-    $this->assertNull($response);
+    $this->assertSame($collectible->toArray(), $this->collectibleInMemoryRepository->findById($id)->toArray());
   }
 
   public function testDeleteWhenDoesExist(): void 
   {
-    $this->collectibleInMemoryRepository->delete(1);
+    $id = DomainId::create("7982e692-dd0b-49c6-a08c-0776b39e9e6c");
+    $this->collectibleInMemoryRepository->delete($id);
 
     $this->assertCount(1, $this->collectibleInMemoryRepository->findAll());
   }
 
   public function testDeleteWhenDoesNotExist(): void 
   {
-    $this->collectibleInMemoryRepository->delete(100);
+    $this->collectibleInMemoryRepository->delete(DomainId::createRandom());
 
     $this->assertCount(2, $this->collectibleInMemoryRepository->findAll());
   }
@@ -63,14 +57,15 @@ class CollectibleInMemoryRepositoryTest extends TestCase
     $this->assertCount(2, $this->collectibleInMemoryRepository->findAll());
   }
 
-  public function testFindByIdWhenDesExist(): void 
+  public function testFindByIdWhenDoesExist(): void 
   {
-    $collectible = Collectible::create(1, "Collectible 1", "Common");
-    $this->assertEquals($collectible->toArray(), $this->collectibleInMemoryRepository->findById(1)->toArray());
+    $id = DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0");
+    $collectible = Collectible::create($id, "Collectible 1", "Common");
+    $this->assertEquals($collectible->toArray(), $this->collectibleInMemoryRepository->findById($id)->toArray());
   }
 
   public function testFindByIdWhenDoesNotExist(): void 
   {
-    $this->assertNull($this->collectibleInMemoryRepository->findById(100));
+    $this->assertNull($this->collectibleInMemoryRepository->findById(DomainId::createRandom()));
   }
 } 
