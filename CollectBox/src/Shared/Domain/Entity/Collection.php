@@ -2,20 +2,15 @@
 
 namespace App\Shared\Domain\Entity;
 
-use App\Shared\Domain\Exception\CollectionInvalidTypeException;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Traversable;
 
-//TODO: tests
 class Collection implements Countable, IteratorAggregate
 {
-  protected array $elements = [];
-
-  protected function __construct(array $elements)
+  protected function __construct(protected array $elements)
   {
-    $this->elements = $elements;
   }
 
   public static function empty(): self
