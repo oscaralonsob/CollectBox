@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\Collection;
 
 class GetCollectiblesQueryHandler
 {
@@ -12,7 +13,7 @@ class GetCollectiblesQueryHandler
   {
   }
 
-  public function execute(GetCollectiblesQuery $query): array
+  public function execute(GetCollectiblesQuery $query): Collection
   {
     return $this->collectibleRepository->findAll();
   }

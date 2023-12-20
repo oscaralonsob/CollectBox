@@ -24,7 +24,7 @@ class GetCollectiblesHandler implements RequestHandlerInterface
     $result = $this->getCollectiblesQueryHandler->execute($query);
     $array = [];
     foreach ($result as $collectible) {
-      $array[] = $collectible->toArray(); //TODO: Collection
+      $array[] = $collectible->toArray();
     }
 
     $response = new Response(200);

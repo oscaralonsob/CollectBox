@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Collectible\Infrastructure\Persistance\InMemory;
 
 use App\Collectible\Domain\Aggregate\Collectible;
+use App\Collectible\Domain\Entity\CollectibleCollection;
 use App\Collectible\Domain\Repository\CollectibleRepository;
+use App\Shared\Domain\Entity\Collection;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
 use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
@@ -47,9 +49,15 @@ class CollectibleInMemoryRepository implements CollectibleRepository
     return $collectibleId;
   }
 
-  public function findAll(): array 
+  public function findAll(): Collection
   {
-    return $this->collectibles;
+    $collectibles = $this->collectibles;
+    $collection = CollectibleCollection::empty();
+    foreach ($collectibles as $collectible) {
+      $collection->add($collectible);
+    }
+    
+    return $collection;
   }
 
   public function findById(DomainId $id): ?Collectible 

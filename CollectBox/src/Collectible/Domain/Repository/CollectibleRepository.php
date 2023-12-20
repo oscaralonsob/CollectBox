@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Collectible\Domain\Repository;
 
 use App\Collectible\Domain\Aggregate\Collectible;
+use App\Shared\Domain\Entity\Collection;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 interface CollectibleRepository
@@ -13,7 +14,7 @@ interface CollectibleRepository
 
   public function delete(DomainId $collectibleId): DomainId;
 
-  public function findAll(): array; //TODO: return collection
+  public function findAll(): Collection;
 
   public function findById(DomainId $id): ?Collectible;
 } 
