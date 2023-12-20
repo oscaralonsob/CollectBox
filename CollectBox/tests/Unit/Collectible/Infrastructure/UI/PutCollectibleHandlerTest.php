@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PutCollectibleCommandHandler;
+use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Infrastructure\UI\PutCollectibleHandler;
 use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 use App\Shared\Domain\Exception\UuidInvalidException;
@@ -60,14 +61,9 @@ class PutCollectibleHandlerTest extends TestCase
   }
 
   public function testHandlerReturn404WhenDoesNotExist(): void
-  {
+  {    
     $collectible = CollectibleMother::createRandom();
-    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
-    $this->request->method('getParsedBody')->willReturn([
-      'name' => $collectible->name()->value(),
-      'rarity' => $collectible->rarity()->value(),
-    ]);
-    $this->putCollectibleCommandHandler->method('execute')->willReturn(null);
+    $this->putCollectibleCommandHandler->method('execute')->willThrowException(CollectibleNotFoundException::create($collectible->id()));
 
     $response = $this->putCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();

@@ -6,6 +6,7 @@ namespace App\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PutCollectibleCommand;
 use App\Collectible\Application\PutCollectibleCommandHandler;
+use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 use App\Shared\Domain\Exception\UuidInvalidException;
 use Psr\Http\Message\ResponseInterface;
@@ -30,19 +31,17 @@ class PutCollectibleHandler implements RequestHandlerInterface
       $query = PutCollectibleCommand::create($id, $name, $rarity);
       $result = $this->putCollectibleCommandHandler->execute($query);
       
-      if (!empty($result)) {
-        $response->getBody()->write(json_encode($result->toArray()));  
-      } else {
-        //TODO: handle not found in command
-        $response->getBody()->write(json_encode(["error" => "Collectible not found"]));
-        $response = $response->withStatus(404);
-      }
+      $response->getBody()->write(json_encode($result->toArray()));  
+      
     } catch (NonEmptyStringInvalidException $e) {
       $response->getBody()->write(json_encode(["error" => "Name or rarity missing"]));
       $response = $response->withStatus(500);
     } catch (UuidInvalidException $e) {
       $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
       $response = $response->withStatus(500);
+    } catch (CollectibleNotFoundException $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+      $response = $response->withStatus(404);
     }
     
     return $response;

@@ -39,6 +39,20 @@ class Collectible
     return $this->rarity;
   }
 
+  public function rename(NonEmptyString $value): Collectible
+  {
+    $this->name = $value;
+
+    return $this;
+  }
+
+  public function changeRarity(NonEmptyString $value): Collectible
+  {
+    $this->rarity = $value;
+
+    return $this;
+  }
+
   public function toArray(): array
   {
     return [

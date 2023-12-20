@@ -31,7 +31,7 @@ class CollectibleCollectionTest extends TestCase
   {
     $this->expectException(CollectionInvalidTypeException::class);
 
-    $testCollection = CollectibleCollection::create([new stdClass()]);
+    CollectibleCollection::create([new stdClass()]);
   }
 
   public function testAddToWrongCollection(): void
