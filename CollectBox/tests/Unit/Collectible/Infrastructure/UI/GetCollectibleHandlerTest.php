@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\GetCollectibleByIdQueryHandler;
-use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\GetCollectibleHandler;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
-use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
+use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,11 +26,7 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturn200WhenDoesExist(): void
   {
-    $collectible = Collectible::create(
-      DomainId::createRandom(), 
-      NonEmptyString::create("testName"), 
-      NonEmptyString::create("testRarity")
-    );
+    $collectible = CollectibleMother::createRandom();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn($collectible);
 
@@ -44,11 +38,7 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturnCollectibleWhenDoesExist(): void
   {
-    $collectible = Collectible::create(
-      DomainId::createRandom(), 
-      NonEmptyString::create("testName"), 
-      NonEmptyString::create("testRarity")
-    );
+    $collectible = CollectibleMother::createRandom();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn($collectible);
 
@@ -60,7 +50,8 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturn404WhenDoesNotExist(): void
   {
-    $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
+    $collectible = CollectibleMother::createRandom();
+    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn(null);
 
     $response = $this->getCollectibleHandler->handle($this->request);
@@ -71,7 +62,8 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturnNoCollectibleWhenDoesNotExist(): void
   {
-    $this->request->method('getAttribute')->willReturn(DomainId::createRandom()->value());
+    $collectible = CollectibleMother::createRandom();
+    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn(null);
 
     $response = $this->getCollectibleHandler->handle($this->request);

@@ -4,30 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Collectible\Domain\Aggregate;
 
-use App\Collectible\Domain\Aggregate\Collectible;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
-use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PHPUnit\Framework\TestCase;
 
 class CollectibleTest extends TestCase
 {
   public function testToArrayIsCorrect(): void
   {
-    $id = DomainId::createRandom();
-    $name = NonEmptyString::create("TestName");
-    $rarity = NonEmptyString::create("TestRarity");
-
-    $collectible = Collectible::create(
-      $id,
-      $name,
-      $rarity,
-    );
+    $collectible = CollectibleMother::create();
 
     $this->assertEquals(
       [
-        'id' => $id->value(),
-        'name' => $name->value(),
-        'rarity' => $rarity->value(),
+        'id' => "ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0",
+        'name' => "Collectible 1",
+        'rarity' => "Common",
       ], 
       $collectible->toArray()
     );

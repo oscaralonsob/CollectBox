@@ -7,8 +7,7 @@ namespace Tests\Unit\Collectible\Infrastructure\UI;
 use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\GetCollectiblesHandler;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
-use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
+use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,15 +27,9 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn200(): void
   {
-    $collectibles = [
-      Collectible::create(
-        DomainId::createRandom(),
-        NonEmptyString::create('testName'),
-        NonEmptyString::create('testRarity')
-      )
-    ];
-    $this->request->method('getAttribute')->willReturn(DomainId::createRandom());
-    $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
+    $collectible = CollectibleMother::createRandom();
+    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
+    $this->getCollectiblesQueryHandler->method('execute')->willReturn([$collectible]);
 
     $response = $this->getCollectiblesHandler->handle($this->request);
     $response->getBody()->rewind();
@@ -46,9 +39,9 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn200WhenEmpty(): void
   {
-    $collectibles = [];
-    $this->request->method('getAttribute')->willReturn(DomainId::createRandom());
-    $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
+    $collectible = CollectibleMother::createRandom();
+    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
+    $this->getCollectiblesQueryHandler->method('execute')->willReturn([]);
 
     $response = $this->getCollectiblesHandler->handle($this->request);
     $response->getBody()->rewind();
@@ -58,19 +51,12 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturnCollectibles(): void
   {
+    $collectible = CollectibleMother::createRandom();
     $collectibles = [
-      Collectible::create(
-        DomainId::createRandom(),
-        NonEmptyString::create('testName'),
-        NonEmptyString::create('testRarity')
-      ),
-      Collectible::create(
-        DomainId::createRandom(),
-        NonEmptyString::create('testName2'), 
-        NonEmptyString::create('testRarity2')
-      )
+      $collectible,
+      CollectibleMother::createRandom()
     ];
-    $this->request->method('getAttribute')->willReturn(DomainId::createRandom());
+    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
 
     $response = $this->getCollectiblesHandler->handle($this->request);

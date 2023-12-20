@@ -6,10 +6,8 @@ namespace Tests\Unit\Collectible\Application;
 
 use App\Collectible\Application\PostCollectibleCommand;
 use App\Collectible\Application\PostCollectibleCommandHandler;
-use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
-use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
+use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -33,11 +31,7 @@ class PostCollectibleCommandHandlerTest extends TestCase
 
   public function testCollectibleIsReturned(): void
   {
-    $collectible = Collectible::create(
-      DomainId::createRandom(), 
-      NonEmptyString::create("testName"), 
-      NonEmptyString::create("testRarity")
-    );
+    $collectible = CollectibleMother::createRandom();
     $this->collectibleRepository->method('save')->willReturn($collectible);
 
     $result = $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create($collectible->name()->value(), $collectible->rarity()->value()));
