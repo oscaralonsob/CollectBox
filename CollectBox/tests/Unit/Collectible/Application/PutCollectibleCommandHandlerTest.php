@@ -43,7 +43,7 @@ class PutCollectibleCommandHandlerTest extends TestCase
     $this->assertEquals($collectible, $result);
   }
 
-  public function testCollectibleNotFounDExceptionIsThrow(): void
+  public function testCollectibleNotFoundExceptionIsThrow(): void
   {
     $collectible = CollectibleMother::createRandom();
     $this->expectException(CollectibleNotFoundException::class);
