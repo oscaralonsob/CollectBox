@@ -14,7 +14,6 @@ class GetCollectibleByIdQueryHandler
   {
   }
 
-  //TODO: return collectible
   public function execute(GetCollectibleByIdQuery $query): ?Collectible
   {
     return $this->collectibleRepository->findById(DomainId::create($query->id()));

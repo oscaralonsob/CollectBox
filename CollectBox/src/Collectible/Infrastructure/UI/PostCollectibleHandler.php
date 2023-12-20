@@ -6,6 +6,7 @@ namespace App\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PostCollectibleCommand;
 use App\Collectible\Application\PostCollectibleCommandHandler;
+use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -20,18 +21,16 @@ class PostCollectibleHandler implements RequestHandlerInterface
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     $response = new Response(200);
-    $name = $request->getParsedBody()['name'];
-    $rarity = $request->getParsedBody()['rarity'];
+    $name = $request->getParsedBody()['name'] ?? '';
+    $rarity = $request->getParsedBody()['rarity'] ?? '';
 
-    //TODO: delegate responsibility to create
-    if (empty($name) || empty($rarity)) {
-      $response->getBody()->write(json_encode(["error" => "Name or rarity missing"]));
-      $response = $response->withStatus(500);
-    } else {
+    try {
       $query = PostCollectibleCommand::create($name, $rarity);
-
       $result = $this->postCollectibleCommandHandler->execute($query);
       $response->getBody()->write(json_encode($result->toArray()));
+    } catch (NonEmptyStringInvalidException $e) {
+      $response->getBody()->write(json_encode(["error" => "Name or rarity missing"]));
+      $response = $response->withStatus(500);
     }
     
     return $response;

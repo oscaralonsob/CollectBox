@@ -6,6 +6,8 @@ namespace Tests\Unit\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PutCollectibleCommandHandler;
 use App\Collectible\Infrastructure\UI\PutCollectibleHandler;
+use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
+use App\Shared\Domain\Exception\UuidInvalidException;
 use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -73,13 +75,9 @@ class PutCollectibleHandlerTest extends TestCase
     $this->assertEquals(404, $response->getStatusCode());
   }
 
-  public function testHandlerReturn500WhenNoIdProvided(): void
+  public function testHandlerReturn500WhenEmptyString(): void
   {
-    $collectible = CollectibleMother::createRandom();
-    $this->request->method('getParsedBody')->willReturn([
-      'name' => $collectible->name()->value(),
-      'rarity' => '',
-    ]);
+    $this->putCollectibleCommandHandler->method('execute')->willThrowException(NonEmptyStringInvalidException::create());
 
     $response = $this->putCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();
@@ -87,29 +85,9 @@ class PutCollectibleHandlerTest extends TestCase
     $this->assertEquals(500, $response->getStatusCode());
   }
 
-  public function testHandlerReturn500WhenNoNameProvided(): void
+  public function testHandlerReturn500WhenInvalidId(): void
   {
-    $collectible = CollectibleMother::createRandom();
-    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
-    $this->request->method('getParsedBody')->willReturn([
-      'name' => '',
-      'rarity' => $collectible->rarity()->value(),
-    ]);
-
-    $response = $this->putCollectibleHandler->handle($this->request);
-    $response->getBody()->rewind();
-
-    $this->assertEquals(500, $response->getStatusCode());
-  }
-
-  public function testHandlerReturn500WhenNoRarityProvided(): void
-  {
-    $collectible = CollectibleMother::createRandom();
-    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
-    $this->request->method('getParsedBody')->willReturn([
-      'name' => $collectible->name()->value(),
-      'rarity' => '',
-    ]);
+    $this->putCollectibleCommandHandler->method('execute')->willThrowException(UuidInvalidException::create(""));
 
     $response = $this->putCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();

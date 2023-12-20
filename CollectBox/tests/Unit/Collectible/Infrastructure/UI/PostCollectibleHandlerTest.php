@@ -6,6 +6,7 @@ namespace Tests\Unit\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PostCollectibleCommandHandler;
 use App\Collectible\Infrastructure\UI\PostCollectibleHandler;
+use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -54,27 +55,9 @@ class PostCollectibleHandlerTest extends TestCase
     $this->assertEquals($collectible->toArray(), json_decode($response->getBody()->getContents(), true));
   }
 
-  public function testHandlerReturn500WhenNoNameProvided(): void
+  public function testHandlerReturn500InvalidRequest(): void
   {
-    $collectible = CollectibleMother::createRandom();
-    $this->request->method('getParsedBody')->willReturn([
-      'name' => '',
-      'rarity' => $collectible->rarity()->value(),
-    ]);
-
-    $response = $this->postCollectibleHandler->handle($this->request);
-    $response->getBody()->rewind();
-
-    $this->assertEquals(500, $response->getStatusCode());
-  }
-
-  public function testHandlerReturn500WhenNoRarityProvided(): void
-  {
-    $collectible = CollectibleMother::createRandom();
-    $this->request->method('getParsedBody')->willReturn([
-      'name' => $collectible->name()->value(),
-      'rarity' => '',
-    ]);
+    $this->postCollectibleCommandHandler->method('execute')->willThrowException(NonEmptyStringInvalidException::create());
 
     $response = $this->postCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();
