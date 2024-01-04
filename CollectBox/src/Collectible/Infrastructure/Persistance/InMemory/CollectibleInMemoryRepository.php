@@ -23,7 +23,7 @@ class CollectibleInMemoryRepository implements CollectibleRepository
     ];
   }
 
-  public function save(Collectible $collectible): ?Collectible 
+  public function save(Collectible $collectible): Collectible 
   {
     if (!isset($this->collectibles[$collectible->id()->value()])) {
       $collectible = Collectible::create(

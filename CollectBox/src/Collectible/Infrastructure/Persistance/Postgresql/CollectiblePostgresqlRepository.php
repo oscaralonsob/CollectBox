@@ -19,7 +19,7 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
   {
   }
 
-  public function save(Collectible $collectible): ?Collectible 
+  public function save(Collectible $collectible): Collectible 
   {
     $stmt = $this->pdo->prepare(
       "INSERT INTO collectible (id, name, rarity) 
