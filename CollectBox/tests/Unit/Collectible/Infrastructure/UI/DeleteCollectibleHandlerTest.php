@@ -35,7 +35,7 @@ class DeleteCollectibleHandlerTest extends TestCase
     $response = $this->deleteCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();
 
-    $this->assertEquals(["ID" => $collectible->id()->value()], json_decode($response->getBody()->getContents(), true));
+    $this->assertEquals(["id" => $collectible->id()->value()], json_decode($response->getBody()->getContents(), true));
   }
 
   public function testHandlerReturn404WhenDoesNotExist(): void

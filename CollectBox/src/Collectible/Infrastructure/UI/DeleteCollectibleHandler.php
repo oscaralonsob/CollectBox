@@ -15,7 +15,7 @@ use Slim\Psr7\Response;
 
 class DeleteCollectibleHandler implements RequestHandlerInterface
 {
-  private const ID = "ID";
+  private const ID = "id";
 
   public function __construct(private DeleteCollectibleByIdCommandHandler $deleteCollectibleByIdCommandHandler)
   {
