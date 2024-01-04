@@ -8,12 +8,16 @@ WORKDIR /var/www/html
 RUN apt-get update && apt-get install -y \
   nginx \
   supervisor \
-  zip
+  zip \
+  libpq-dev
 
 # Install xdebug correctly
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 RUN echo xdebug.mode=coverage > /usr/local/etc/php/conf.d/xdebug.ini 
+
+# Install pdo correctly
+RUN docker-php-ext-install pdo pdo_pgsql
 
 # Copy the application files to the container
 COPY ./CollectBox /var/www/html/

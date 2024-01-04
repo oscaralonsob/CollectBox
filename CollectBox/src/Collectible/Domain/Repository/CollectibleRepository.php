@@ -10,7 +10,7 @@ use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 interface CollectibleRepository
 {
-  public function save(Collectible $collectible): ?Collectible ;
+  public function save(Collectible $collectible): ?Collectible ; //TODO: remove null
 
   public function delete(DomainId $collectibleId): DomainId;
 
