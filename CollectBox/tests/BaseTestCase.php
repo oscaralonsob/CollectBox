@@ -25,5 +25,21 @@ abstract class BaseTestCase extends PHPUnit_TestCase
       $pdo = $app->getContainer()->get(PDO::class);
       self::$collectiblePostgresqlRepository = new CollectiblePostgresqlRepository($pdo);
     }
+
+    $this->truncateDatabase();
+    $this->initDatabase();
+  }
+
+  private function truncateDatabase(): void 
+  {
+    foreach (self::$collectiblePostgresqlRepository->findAll() as $collectible) {
+      self::$collectiblePostgresqlRepository->delete($collectible->id());
+    }
+  }
+
+  private function initDatabase(): void 
+  {
+    $collectible = CollectibleMother::create();
+    self::$collectiblePostgresqlRepository->save($collectible);
   }
 }

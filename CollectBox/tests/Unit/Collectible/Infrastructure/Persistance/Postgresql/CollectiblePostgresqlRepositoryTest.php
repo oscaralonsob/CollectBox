@@ -10,13 +10,9 @@ use Tests\BaseTestCase;
 
 class CollectiblePostgresqlRepositoryTest extends BaseTestCase
 {
-  //TODO: Initialize database values here, calling the parent
   public function setUp(): void 
   {
     parent::setUp();
-
-    $collectible = CollectibleMother::create();
-    self::$collectiblePostgresqlRepository->save($collectible);
   }
 
   public function testSaveInsert(): void 
