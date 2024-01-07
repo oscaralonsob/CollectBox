@@ -12,7 +12,6 @@ use App\Shared\Domain\Entity\ValueObject\DomainId;
 use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PDO;
 
-//TODO: something like custom ORM to avoid code repetition
 class CollectiblePostgresqlRepository implements CollectibleRepository
 {
   public function __construct(private PDO $pdo)
@@ -23,17 +22,13 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
   {
     $stmt = $this->pdo->prepare(
       "INSERT INTO collectible (id, name, rarity) 
-            VALUES (:idValue, :nameValue, :rarityValue) 
+            VALUES (:id, :name, :rarity) 
             ON CONFLICT (id) DO UPDATE SET
             name = EXCLUDED.name,
             rarity = EXCLUDED.rarity"
     );
       
-    $stmt->execute([
-      "idValue" => $collectible->id()->value(),
-      "nameValue" => $collectible->name()->value(),
-      "rarityValue" => $collectible->rarity()->value(),
-    ]);
+    $stmt->execute($this->fromObject($collectible));
     return $collectible;
   }
 
@@ -53,11 +48,7 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
     $collection = CollectibleCollection::empty();
     foreach ($collectibles as $collectible) {
       $collection->add(
-        Collectible::create(
-          DomainId::create($collectible->id), 
-          NonEmptyString::create($collectible->name), 
-          NonEmptyString::create($collectible->rarity) 
-        )
+        $this->toObject($collectible)
       );
     }
     
@@ -70,10 +61,24 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
     $stmt->execute(["id" => $id->value()]);
     $collectible = $stmt->fetch(PDO::FETCH_OBJ);
     
-    return $collectible ? Collectible::create(
+    return $collectible ? $this->toObject($collectible) : null;
+  }
+
+  private function toObject(object $collectible): Collectible
+  {
+    return Collectible::create(
       DomainId::create($collectible->id), 
       NonEmptyString::create($collectible->name), 
       NonEmptyString::create($collectible->rarity) 
-    ) : null;
+    );
+  }
+
+  private function fromObject(Collectible $collectible): array
+  {
+    return [
+      "id" => $collectible->id()->value(),
+      "name" => $collectible->name()->value(),
+      "rarity" => $collectible->rarity()->value(),
+    ];
   }
 }
