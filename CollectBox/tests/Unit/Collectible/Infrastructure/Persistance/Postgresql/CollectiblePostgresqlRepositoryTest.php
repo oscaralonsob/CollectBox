@@ -5,33 +5,15 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Collectible\Infrastructure\Persistance\Postgresql;
 
-use App\Collectible\Domain\Repository\CollectibleRepository;
-use App\Collectible\Infrastructure\Persistance\Postgresql\CollectiblePostgresqlRepository;
-use Exception;
-use PDO;
-use PhpParser\Node\Expr\Cast\Bool_;
 use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
-use PHPUnit\Framework\TestCase;
-use Slim\App;
+use Tests\BaseTestCase;
 
-class CollectiblePostgresqlRepositoryTest extends TestCase
+class CollectiblePostgresqlRepositoryTest extends BaseTestCase
 {
-  //TODO: create class as BaseTestCase or something like that
   //TODO: Initialize database values here, calling the parent
-  private static CollectiblePostgresqlRepository $collectiblePostgresqlRepository;
-
   public function setUp(): void 
   {
-    if (!isset(self::$collectiblePostgresqlRepository)) {
-      require __DIR__ . '/../../../../../../vendor/autoload.php';
-      $dependencies = require_once __DIR__ . "/../../../../../../config/Dependencies.php";
-      $builder = new \DI\ContainerBuilder();
-      $dependencies($builder);
-      $container = $builder->build();
-      $app = \DI\Bridge\Slim\Bridge::create($container);
-      $pdo = $app->getContainer()->get(PDO::class);
-      self::$collectiblePostgresqlRepository = new CollectiblePostgresqlRepository($pdo);
-    }
+    parent::setUp();
 
     $collectible = CollectibleMother::create();
     self::$collectiblePostgresqlRepository->save($collectible);
