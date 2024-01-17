@@ -32,6 +32,10 @@ RUN composer install --optimize-autoloader
 COPY ./conf/default.conf /etc/nginx/sites-available/default
 COPY ./conf/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 
+# Secret file for render
+RUN cp /var/www/html/.env /tmp/.env || echo "Env file does not exists"
+RUN --mount=type=secret,id=_env,dst=/etc/secrets/.env cat /etc/secrets/.env > /var/www/html/.env || cp /tmp/.env /var/www/html/.env 
+
 # Expose port 80 for Nginx
 EXPOSE 80
 
