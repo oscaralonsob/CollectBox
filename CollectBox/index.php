@@ -6,6 +6,9 @@ require __DIR__ . '/vendor/autoload.php';
 $dependencies = require_once __DIR__ . "/config/Dependencies.php";
 $routes = require_once __DIR__ . "/config/Routes.php";
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $builder = new DI\ContainerBuilder();
 $dependencies($builder);
 $container = $builder->build();

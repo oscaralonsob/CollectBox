@@ -13,18 +13,14 @@ return static function (ContainerBuilder $builder) {
   $builder->addDefinitions([
     PDO::class => function (ContainerInterface $container) {
       //TODO: env file or something like that, but first this to test it
-      $host = "dpg-clp3h6hoh6hc73bs8ttg-a.frankfurt-postgres.render.com";
-      $dbname = "app_bhuh";
-      $dbUser = "collect_box_sql";
-      $dbPass = "2DRqa7ocpSWXkNjhlNNtRqFZSNDLu6pk";
-      $dsn = 'pgsql:host=' . $host . ';dbname=' . $dbname;
+      $dsn = 'pgsql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_NAME'];
       $options = [
           PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
           PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
           PDO::ATTR_EMULATE_PREPARES => false,
       ];
 
-      return new PDO($dsn, $dbUser, $dbPass, $options);
+      return new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASS'], $options);
     },
   ]);
 
