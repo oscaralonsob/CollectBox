@@ -9,14 +9,14 @@ class DomainId
 {
   public function __construct(protected string $value)
   {
+    //TODO: migrate to guard
+    if (!Uuid::isValid($value)) {
+      throw UuidInvalidException::create($value);
+    }
   }
 
   public static function create(string $uuid): self
   {
-    if (!Uuid::isValid($uuid)) {
-      throw UuidInvalidException::create($uuid);
-    }
-
     return new self($uuid);
   }
 

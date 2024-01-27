@@ -8,15 +8,19 @@ class NonEmptyString
 {
   public function __construct(protected string $value)
   {
+    $this->guard($value);
   }
 
   public static function create(string $value): self
   {
+    return new self($value);
+  }
+
+  private function guard(string $value): void
+  {
     if ("" == $value) {
       throw NonEmptyStringInvalidException::create();
     }
-
-    return new self($value);
   }
 
   public function value(): string
