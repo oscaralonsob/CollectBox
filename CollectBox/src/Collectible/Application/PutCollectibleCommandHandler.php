@@ -6,10 +6,10 @@ namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleName;
+use App\Collectible\Domain\Entity\CollectibleUrl;
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
-use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
 class PutCollectibleCommandHandler
 {
@@ -21,7 +21,7 @@ class PutCollectibleCommandHandler
   {
     $id = DomainId::create($command->id());
     $name = CollectibleName::create($command->name());
-    $rarity = NonEmptyString::create($command->rarity());
+    $url = CollectibleUrl::create($command->url());
 
     $collectible = $this->collectibleRepository->findById($id);
     if (null == $collectible) {
@@ -30,7 +30,7 @@ class PutCollectibleCommandHandler
 
     $collectible
       ->rename($name)
-      ->changeRarity($rarity);
+      ->changeUrl($url);
 
     return $this->collectibleRepository->save($collectible);
   }

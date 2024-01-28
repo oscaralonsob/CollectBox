@@ -8,12 +8,12 @@ class PostCollectibleCommand
 {
   private function __construct(
     private string $name,
-    private string $rarity
+    private string $url
   ) {}
 
-  public static function create(string $name, string $rarity): self
+  public static function create(string $name, string $url): self
   {
-    return new self($name, $rarity);
+    return new self($name, $url);
   }
 
   public function name(): string
@@ -21,8 +21,8 @@ class PostCollectibleCommand
     return $this->name;
   }
 
-  public function rarity(): string
+  public function url(): string
   {
-    return $this->rarity;
+    return $this->url;
   }
 }

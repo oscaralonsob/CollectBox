@@ -5,24 +5,24 @@ declare(strict_types=1);
 namespace App\Collectible\Domain\Aggregate;
 
 use App\Collectible\Domain\Entity\CollectibleName;
+use App\Collectible\Domain\Entity\CollectibleUrl;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
-use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
 class Collectible 
 {
   private function __construct(
     private DomainId $id,
     private CollectibleName $name,
-    private NonEmptyString $rarity
+    private CollectibleUrl $url
   ) {
   }
   
   public static function create(
     DomainId $id,
     CollectibleName $name,
-    NonEmptyString $rarity
+    CollectibleUrl $url
   ) {
-    return new self($id, $name, $rarity);
+    return new self($id, $name, $url);
   }
 
   public function id(): DomainId
@@ -35,21 +35,21 @@ class Collectible
     return $this->name;
   }
 
-  public function rarity(): NonEmptyString
+  public function url(): CollectibleUrl
   {
-    return $this->rarity;
+    return $this->url;
   }
 
-  public function rename(NonEmptyString $value): Collectible
+  public function rename(CollectibleName $value): Collectible
   {
     $this->name = $value;
 
     return $this;
   }
 
-  public function changeRarity(NonEmptyString $value): Collectible
+  public function changeUrl(CollectibleUrl $value): Collectible
   {
-    $this->rarity = $value;
+    $this->url = $value;
 
     return $this;
   }
@@ -59,7 +59,7 @@ class Collectible
     return [
       'id' => $this->id()->value(),
       'name' => $this->name()->value(),
-      'rarity' => $this->rarity()->value(),
+      'url' => $this->url()->value(),
     ];
   }
 }

@@ -25,16 +25,16 @@ class PutCollectibleHandler implements RequestHandlerInterface
     $response = new Response(200);
     $id = $request->getAttribute("id") ?? '';
     $name = $request->getParsedBody()['name'] ?? '';
-    $rarity = $request->getParsedBody()['rarity'] ?? '';
+    $url = $request->getParsedBody()['url'] ?? '';
 
     try {
-      $query = PutCollectibleCommand::create($id, $name, $rarity);
+      $query = PutCollectibleCommand::create($id, $name, $url);
       $result = $this->putCollectibleCommandHandler->execute($query);
       
       $response->getBody()->write(json_encode($result->toArray()));  
       
     } catch (NonEmptyStringInvalidException $e) {
-      $response->getBody()->write(json_encode(["error" => "Name or rarity missing"]));
+      $response->getBody()->write(json_encode(["error" => "Name or url missing"]));
       $response = $response->withStatus(500);
     } catch (UuidInvalidException $e) {
       $response->getBody()->write(json_encode(["error" => $e->getMessage()]));

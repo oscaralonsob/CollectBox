@@ -30,7 +30,7 @@ class PostCollectibleHandlerTest extends TestCase
     $collectible = CollectibleMother::createRandom();
     $this->request->method('getParsedBody')->willReturn([
       'name' => $collectible->name()->value(),
-      'rarity' => $collectible->rarity()->value(),
+      'url' => $collectible->url()->value(),
     ]);
     $this->postCollectibleCommandHandler->method('execute')->willReturn($collectible);
 
@@ -45,7 +45,7 @@ class PostCollectibleHandlerTest extends TestCase
     $collectible = CollectibleMother::createRandom();
     $this->request->method('getParsedBody')->willReturn([
       'name' => $collectible->name()->value(),
-      'rarity' => $collectible->rarity()->value(),
+      'url' => $collectible->url()->value(),
     ]);
     $this->postCollectibleCommandHandler->method('execute')->willReturn($collectible);
 

@@ -9,7 +9,7 @@ use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
 class CollectibleUrl extends NonEmptyString
 {
-  private const VALIDATION_REGEX = "/B[0-9]{2}\-[0-9]{3}(N|HN|S?R\+?)/";
+  private const URL = "https://wiki.serenesforest.net/index.php";
 
   private function __construct(string $value)
   {
@@ -24,7 +24,7 @@ class CollectibleUrl extends NonEmptyString
 
   private function guard(string $value): void
   {
-    if (!str_starts_with($value, "https://wiki.serenesforest.net/index.php")) {
+    if (!str_starts_with($value, self::URL)) {
       throw CollectibleUrlInvalidException::create($value);
     }
   }

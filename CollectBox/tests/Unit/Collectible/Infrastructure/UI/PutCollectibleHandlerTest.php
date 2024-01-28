@@ -34,7 +34,7 @@ class PutCollectibleHandlerTest extends TestCase
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->request->method('getParsedBody')->willReturn([
       'name' => $collectible->name()->value(),
-      'rarity' => $collectible->rarity()->value(),
+      'url' => $collectible->url()->value(),
     ]);
     $this->putCollectibleCommandHandler->method('execute')->willReturn($collectible);
 
@@ -50,7 +50,7 @@ class PutCollectibleHandlerTest extends TestCase
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->request->method('getParsedBody')->willReturn([
       'name' => $collectible->name()->value(),
-      'rarity' => $collectible->rarity()->value(),
+      'url' => $collectible->url()->value(),
     ]);
     $this->putCollectibleCommandHandler->method('execute')->willReturn($collectible);
 

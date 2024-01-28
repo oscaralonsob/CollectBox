@@ -7,10 +7,10 @@ namespace App\Collectible\Infrastructure\Persistance\Postgresql;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleCollection;
 use App\Collectible\Domain\Entity\CollectibleName;
+use App\Collectible\Domain\Entity\CollectibleUrl;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\Collection;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
-use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use PDO;
 
 class CollectiblePostgresqlRepository implements CollectibleRepository
@@ -22,11 +22,11 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
   public function save(Collectible $collectible): Collectible 
   {
     $stmt = $this->pdo->prepare(
-      "INSERT INTO collectible (id, name, rarity) 
-            VALUES (:id, :name, :rarity) 
+      "INSERT INTO collectible (id, name, url) 
+            VALUES (:id, :name, :url) 
             ON CONFLICT (id) DO UPDATE SET
             name = EXCLUDED.name,
-            rarity = EXCLUDED.rarity"
+            url = EXCLUDED.url"
     );
       
     $stmt->execute($this->fromObject($collectible));
@@ -70,7 +70,7 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
     return Collectible::create(
       DomainId::create($collectible->id), 
       CollectibleName::create($collectible->name), 
-      NonEmptyString::create($collectible->rarity) 
+      CollectibleUrl::create($collectible->url) 
     );
   }
 
@@ -79,7 +79,7 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
     return [
       "id" => $collectible->id()->value(),
       "name" => $collectible->name()->value(),
-      "rarity" => $collectible->rarity()->value(),
+      "url" => $collectible->url()->value(),
     ];
   }
 }

@@ -9,12 +9,12 @@ class PutCollectibleCommand
   private function __construct(
     private string $id,
     private ?string $name,
-    private ?string $rarity
+    private ?string $url
   ) {}
 
-  public static function create(string $id, ?string $name, ?string $rarity): self
+  public static function create(string $id, ?string $name, ?string $url): self
   {
-    return new self($id, $name, $rarity);
+    return new self($id, $name, $url);
   }
 
   public function id(): string
@@ -27,8 +27,8 @@ class PutCollectibleCommand
     return $this->name;
   }
 
-  public function rarity(): ?string
+  public function url(): ?string
   {
-    return $this->rarity;
+    return $this->url;
   }
 }

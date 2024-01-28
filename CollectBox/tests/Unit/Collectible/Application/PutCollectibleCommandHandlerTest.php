@@ -29,7 +29,7 @@ class PutCollectibleCommandHandlerTest extends TestCase
     $this->collectibleRepository->method('findById')->willReturn($collectible);
     $this->collectibleRepository->expects($this->once())->method('save')->willReturn($collectible);
 
-    $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->rarity()->value()));
+    $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->url()->value()));
   }
 
   public function testCollectibleIsReturned(): void
@@ -38,7 +38,7 @@ class PutCollectibleCommandHandlerTest extends TestCase
     $this->collectibleRepository->method('findById')->willReturn($collectible);
     $this->collectibleRepository->method('save')->willReturn($collectible);
 
-    $result = $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->rarity()->value()));
+    $result = $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->url()->value()));
     
     $this->assertEquals($collectible, $result);
   }
@@ -49,6 +49,6 @@ class PutCollectibleCommandHandlerTest extends TestCase
     $this->expectException(CollectibleNotFoundException::class);
     $this->collectibleRepository->method('findById')->willReturn(null);
 
-    $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->rarity()->value()));
+    $this->putCollectibleCommandHandler->execute(PutCollectibleCommand::create($collectible->id()->value(), $collectible->name()->value(), $collectible->url()->value()));
   }
 }
