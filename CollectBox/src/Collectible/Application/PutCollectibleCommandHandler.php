@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Aggregate\Collectible;
+use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
 use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
-use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 
 class PutCollectibleCommandHandler
 {
@@ -20,7 +20,7 @@ class PutCollectibleCommandHandler
   public function execute(PutCollectibleCommand $command): ?Collectible
   {
     $id = DomainId::create($command->id());
-    $name = NonEmptyString::create($command->name());
+    $name = CollectibleName::create($command->name());
     $rarity = NonEmptyString::create($command->rarity());
 
     $collectible = $this->collectibleRepository->findById($id);

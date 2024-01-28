@@ -6,6 +6,7 @@ namespace App\Collectible\Infrastructure\Persistance\Postgresql;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleCollection;
+use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\Collection;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
@@ -68,7 +69,7 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
   {
     return Collectible::create(
       DomainId::create($collectible->id), 
-      NonEmptyString::create($collectible->name), 
+      CollectibleName::create($collectible->name), 
       NonEmptyString::create($collectible->rarity) 
     );
   }

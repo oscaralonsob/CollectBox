@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Aggregate\Collectible;
+use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
@@ -20,7 +21,7 @@ class PostCollectibleCommandHandler
   {
     $collectible = Collectible::create(
       DomainId::createRandom(),
-      NonEmptyString::create($command->name()),
+      CollectibleName::create($command->name()),
       NonEmptyString::create($command->rarity())
     );
 

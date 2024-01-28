@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Collectible\Domain\Aggregate;
 
+use App\Collectible\Domain\Entity\CollectibleName;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
 use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
@@ -11,14 +12,14 @@ class Collectible
 {
   private function __construct(
     private DomainId $id,
-    private NonEmptyString $name,
+    private CollectibleName $name,
     private NonEmptyString $rarity
   ) {
   }
   
   public static function create(
     DomainId $id,
-    NonEmptyString $name,
+    CollectibleName $name,
     NonEmptyString $rarity
   ) {
     return new self($id, $name, $rarity);
@@ -29,7 +30,7 @@ class Collectible
     return $this->id;
   }
 
-  public function name(): NonEmptyString
+  public function name(): CollectibleName
   {
     return $this->name;
   }
