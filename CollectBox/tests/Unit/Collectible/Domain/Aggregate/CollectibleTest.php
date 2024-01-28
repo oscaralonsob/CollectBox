@@ -15,6 +15,7 @@ class CollectibleTest extends TestCase
     $this->assertEquals(
       [
         'id' => "ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0",
+        'code' => "B01-001N",
         'name' => "Collectible 1",
         'url' => "https://wiki.serenesforest.net/index.php/Collectible-1",
       ], 

@@ -26,7 +26,7 @@ class PostCollectibleCommandHandlerTest extends TestCase
   {
     $this->collectibleRepository->expects($this->once())->method('save');
 
-    $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create("testName", "https://wiki.serenesforest.net/index.php/Collectible-1"));
+    $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create("B01-001R", "testName", "https://wiki.serenesforest.net/index.php/Collectible-1"));
   }
 
   public function testCollectibleIsReturned(): void
@@ -34,7 +34,7 @@ class PostCollectibleCommandHandlerTest extends TestCase
     $collectible = CollectibleMother::createRandom();
     $this->collectibleRepository->method('save')->willReturn($collectible);
 
-    $result = $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create($collectible->name()->value(), $collectible->url()->value()));
+    $result = $this->postCollectibleCommandHandler->execute(PostCollectibleCommand::create($collectible->code()->value(), $collectible->name()->value(), $collectible->url()->value()));
     
     $this->assertEquals($collectible, $result);
   }

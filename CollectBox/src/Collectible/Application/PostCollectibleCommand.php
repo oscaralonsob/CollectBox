@@ -7,13 +7,19 @@ namespace App\Collectible\Application;
 class PostCollectibleCommand
 {
   private function __construct(
+    private string $code,
     private string $name,
     private string $url
   ) {}
 
-  public static function create(string $name, string $url): self
+  public static function create(string $code, string $name, string $url): self
   {
-    return new self($name, $url);
+    return new self($code, $name, $url);
+  }
+
+  public function code(): string
+  {
+    return $this->code;
   }
 
   public function name(): string
