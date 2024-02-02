@@ -9,7 +9,11 @@ class DomainId
 {
   public function __construct(protected string $value)
   {
-    //TODO: migrate to guard
+    $this->guard($value);
+  }
+
+  private function guard(string $value): void
+  {
     if (!Uuid::isValid($value)) {
       throw UuidInvalidException::create($value);
     }
