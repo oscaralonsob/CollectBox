@@ -6,8 +6,13 @@ namespace App\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PostCollectibleCommand;
 use App\Collectible\Application\PostCollectibleCommandHandler;
+use App\Collectible\Domain\Entity\CollectibleCode;
+use App\Collectible\Domain\Exception\CollectibleCodeInvalidException;
+use App\Collectible\Domain\Exception\CollectibleNameInvalidException;
+use App\Collectible\Domain\Exception\CollectibleUrlInvalidException;
 use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 use Exception;
+use PharIo\Manifest\InvalidUrlException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -30,14 +35,19 @@ class PostCollectibleHandler implements RequestHandlerInterface
       $query = PostCollectibleCommand::create($code, $name, $url);
       $result = $this->postCollectibleCommandHandler->execute($query);
       $response->getBody()->write(json_encode($result->toArray()));
-    } catch (NonEmptyStringInvalidException $e) {
-      $response->getBody()->write(json_encode(["error" => "Name or url missing"]));
+    } catch (CollectibleCodeInvalidException $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+      $response = $response->withStatus(500);
+    } catch (CollectibleNameInvalidException $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+      $response = $response->withStatus(500);
+    } catch (CollectibleUrlInvalidException $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
       $response = $response->withStatus(500);
     } catch (Exception $e) {
       $response->getBody()->write(json_encode(["error" => "Unknown error"]));
       $response = $response->withStatus(500);
     }
-    //TODO: Add new errors
     
     return $response;
   }

@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PutCollectibleCommandHandler;
+use App\Collectible\Domain\Exception\CollectibleCodeInvalidException;
+use App\Collectible\Domain\Exception\CollectibleNameInvalidException;
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
+use App\Collectible\Domain\Exception\CollectibleUrlInvalidException;
 use App\Collectible\Infrastructure\UI\PutCollectibleHandler;
 use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 use App\Shared\Domain\Exception\UuidInvalidException;
+use Exception;
+use PHPUnit\Framework\MockObject\Generator\InvalidMethodNameException;
 use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -84,6 +89,46 @@ class PutCollectibleHandlerTest extends TestCase
   public function testHandlerReturn500WhenInvalidId(): void
   {
     $this->putCollectibleCommandHandler->method('execute')->willThrowException(UuidInvalidException::create(""));
+
+    $response = $this->putCollectibleHandler->handle($this->request);
+    $response->getBody()->rewind();
+
+    $this->assertEquals(500, $response->getStatusCode());
+  }
+
+  public function testHandlerReturn500WhenInvalidName(): void
+  {
+    $this->putCollectibleCommandHandler->method('execute')->willThrowException(CollectibleNameInvalidException::create(""));
+
+    $response = $this->putCollectibleHandler->handle($this->request);
+    $response->getBody()->rewind();
+
+    $this->assertEquals(500, $response->getStatusCode());
+  }
+
+  public function testHandlerReturn500WhenInvalidCode(): void
+  {
+    $this->putCollectibleCommandHandler->method('execute')->willThrowException(CollectibleCodeInvalidException::create(""));
+
+    $response = $this->putCollectibleHandler->handle($this->request);
+    $response->getBody()->rewind();
+
+    $this->assertEquals(500, $response->getStatusCode());
+  }
+
+  public function testHandlerReturn500WhenInvalidUrl(): void
+  {
+    $this->putCollectibleCommandHandler->method('execute')->willThrowException(CollectibleUrlInvalidException::create(""));
+
+    $response = $this->putCollectibleHandler->handle($this->request);
+    $response->getBody()->rewind();
+
+    $this->assertEquals(500, $response->getStatusCode());
+  }
+
+  public function testHandlerReturn500WhenGeneric(): void
+  {
+    $this->putCollectibleCommandHandler->method('execute')->willThrowException(new Exception());
 
     $response = $this->putCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();

@@ -6,9 +6,13 @@ namespace App\Collectible\Infrastructure\UI;
 
 use App\Collectible\Application\PutCollectibleCommand;
 use App\Collectible\Application\PutCollectibleCommandHandler;
+use App\Collectible\Domain\Exception\CollectibleCodeInvalidException;
+use App\Collectible\Domain\Exception\CollectibleNameInvalidException;
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
+use App\Collectible\Domain\Exception\CollectibleUrlInvalidException;
 use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
 use App\Shared\Domain\Exception\UuidInvalidException;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -42,6 +46,18 @@ class PutCollectibleHandler implements RequestHandlerInterface
     } catch (CollectibleNotFoundException $e) {
       $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
       $response = $response->withStatus(404);
+    } catch (CollectibleCodeInvalidException $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+      $response = $response->withStatus(500);
+    } catch (CollectibleNameInvalidException $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+      $response = $response->withStatus(500);
+    } catch (CollectibleUrlInvalidException $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+      $response = $response->withStatus(500);
+    } catch (Exception $e) {
+      $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+      $response = $response->withStatus(500);
     }
     
     return $response;
