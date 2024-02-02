@@ -12,7 +12,6 @@ return static function (ContainerBuilder $builder) {
   // Database connection
   $builder->addDefinitions([
     PDO::class => function (ContainerInterface $container) {
-      //TODO: env file or something like that, but first this to test it
       $dsn = 'pgsql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_NAME'];
       $options = [
           PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
