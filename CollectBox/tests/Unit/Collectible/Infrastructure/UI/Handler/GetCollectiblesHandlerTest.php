@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Collectible\Infrastructure\UI;
+namespace Tests\Unit\Collectible\Infrastructure\UI\Handler;
 
 use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
-use App\Collectible\Infrastructure\UI\GetCollectiblesHandler;
+use App\Collectible\Infrastructure\UI\Handler\GetCollectiblesHandler;
 use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use Tests\Unit\Collectible\Domain\Entity\CollectibleCollectionMother;
 use PHPUnit\Framework\MockObject\MockObject;

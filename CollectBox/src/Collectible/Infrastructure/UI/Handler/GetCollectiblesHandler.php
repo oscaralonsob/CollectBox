@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Collectible\Infrastructure\UI;
+namespace App\Collectible\Infrastructure\UI\Handler;
 
 use App\Collectible\Application\GetCollectiblesQuery;
 use App\Collectible\Application\GetCollectiblesQueryHandler;

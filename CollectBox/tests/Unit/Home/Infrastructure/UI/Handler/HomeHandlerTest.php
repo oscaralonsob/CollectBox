@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Home\Infrastructure\UI;
+namespace Tests\Unit\Home\Infrastructure\UI\Handler;
 
-use App\Home\Infrastructure\UI\HomeHandler;
+use App\Home\Infrastructure\UI\Handler\HomeHandler;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
