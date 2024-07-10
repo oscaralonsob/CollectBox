@@ -48,20 +48,6 @@ class Collectible
     return $this->url;
   }
 
-  public function rename(CollectibleName $value): Collectible
-  {
-    $this->name = $value;
-
-    return $this;
-  }
-
-  public function changeUrl(CollectibleUrl $value): Collectible
-  {
-    $this->url = $value;
-
-    return $this;
-  }
-
   public function toArray(): array
   {
     return [
