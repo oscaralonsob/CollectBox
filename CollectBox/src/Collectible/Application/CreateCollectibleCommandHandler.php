@@ -11,13 +11,13 @@ use App\Collectible\Domain\Entity\CollectibleUrl;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
 
-class PostCollectibleCommandHandler
+class CreateCollectibleCommandHandler
 {
   public function __construct(private CollectibleRepository $collectibleRepository)
   {
   }
 
-  public function execute(PostCollectibleCommand $command): ?Collectible
+  public function execute(CreateCollectibleCommand $command): ?Collectible
   {
     $collectible = Collectible::create(
       DomainId::createRandom(),
