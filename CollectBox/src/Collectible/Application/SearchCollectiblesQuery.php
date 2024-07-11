@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Collectible\Application;
 
-class GetCollectiblesQuery
+class SearchCollectiblesQuery
 {
   private function __construct() {}
 

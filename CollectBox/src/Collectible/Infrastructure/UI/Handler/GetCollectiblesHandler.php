@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Collectible\Infrastructure\UI\Handler;
 
-use App\Collectible\Application\GetCollectiblesQuery;
-use App\Collectible\Application\GetCollectiblesQueryHandler;
+use App\Collectible\Application\SearchCollectiblesQuery;
+use App\Collectible\Application\SearchCollectiblesQueryHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -13,15 +13,15 @@ use Slim\Psr7\Response;
 
 class GetCollectiblesHandler implements RequestHandlerInterface
 {
-  public function __construct(private GetCollectiblesQueryHandler $getCollectiblesQueryHandler)
+  public function __construct(private SearchCollectiblesQueryHandler $searchCollectiblesQueryHandler)
   {
   }
   
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    $query = GetCollectiblesQuery::create();
+    $query = SearchCollectiblesQuery::create();
 
-    $result = $this->getCollectiblesQueryHandler->execute($query);
+    $result = $this->searchCollectiblesQueryHandler->execute($query);
     $array = [];
     foreach ($result as $collectible) {
       $array[] = $collectible->toArray();

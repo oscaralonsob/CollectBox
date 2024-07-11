@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Collectible\Application;
 
-use App\Collectible\Application\GetCollectiblesQuery;
-use App\Collectible\Application\GetCollectiblesQueryHandler;
+use App\Collectible\Application\SearchCollectiblesQuery;
+use App\Collectible\Application\SearchCollectiblesQueryHandler;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCollectionStub;
 
-class GetCollectiblesQueryHandlerTest extends TestCase
+class SearchCollectiblesQueryHandlerTest extends TestCase
 {
   private CollectibleRepository|MockObject $collectibleRepository;
-  private GetCollectiblesQueryHandler $getCollectiblesQueryHandler;
+  private SearchCollectiblesQueryHandler $searchCollectiblesQueryHandler;
 
   public function setUp(): void
   {
     $this->collectibleRepository = $this->createMock(CollectibleRepository::class);
-    $this->getCollectiblesQueryHandler = new GetCollectiblesQueryHandler($this->collectibleRepository);
+    $this->searchCollectiblesQueryHandler = new SearchCollectiblesQueryHandler($this->collectibleRepository);
   }
 
   public function testFindAllIsCalled(): void
@@ -27,7 +27,7 @@ class GetCollectiblesQueryHandlerTest extends TestCase
     $collectibles = CollectibleCollectionStub::random();
     $this->collectibleRepository->expects($this->once())->method('findAll')->willReturn($collectibles);
 
-    $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());
+    $this->searchCollectiblesQueryHandler->execute(SearchCollectiblesQuery::create());
   }
 
   public function testCollectiblesAreReturned(): void
@@ -35,7 +35,7 @@ class GetCollectiblesQueryHandlerTest extends TestCase
     $collectibles = CollectibleCollectionStub::random();
     $this->collectibleRepository->method('findAll')->willReturn($collectibles);
 
-    $result = $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());
+    $result = $this->searchCollectiblesQueryHandler->execute(SearchCollectiblesQuery::create());
 
     $this->assertEquals($collectibles, $result);
   }
@@ -44,7 +44,7 @@ class GetCollectiblesQueryHandlerTest extends TestCase
   {
     $this->collectibleRepository->method('findAll')->willReturn(CollectibleCollectionStub::empty());
 
-    $result = $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());
+    $result = $this->searchCollectiblesQueryHandler->execute(SearchCollectiblesQuery::create());
 
     $this->assertEquals([], $result->toArray());
   }
