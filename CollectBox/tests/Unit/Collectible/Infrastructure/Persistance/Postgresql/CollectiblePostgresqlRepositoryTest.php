@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Collectible\Infrastructure\Persistance\Postgresql;
 
-use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use Tests\BaseTestCase;
+use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
 
 class CollectiblePostgresqlRepositoryTest extends BaseTestCase
 {
@@ -17,7 +17,7 @@ class CollectiblePostgresqlRepositoryTest extends BaseTestCase
 
   public function testSaveInsert(): void 
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
 
     self::$collectiblePostgresqlRepository->save($collectible);
 
@@ -26,7 +26,7 @@ class CollectiblePostgresqlRepositoryTest extends BaseTestCase
 
   public function testSaveUpdateWhenDoesExist(): void 
   {
-    $collectible = CollectibleMother::create();
+    $collectible = CollectibleStub::fixture();
 
     self::$collectiblePostgresqlRepository->save($collectible);
 
@@ -36,7 +36,7 @@ class CollectiblePostgresqlRepositoryTest extends BaseTestCase
   public function testDeleteWhenDoesExist(): void 
   {
     $preDeleteCount = count(self::$collectiblePostgresqlRepository->findAll());
-    $collectible = CollectibleMother::create();
+    $collectible = CollectibleStub::fixture();
     self::$collectiblePostgresqlRepository->delete($collectible->id());
 
     $this->assertCount($preDeleteCount - 1, self::$collectiblePostgresqlRepository->findAll());
@@ -45,7 +45,7 @@ class CollectiblePostgresqlRepositoryTest extends BaseTestCase
   public function testDeleteWhenDoesNotExist(): void 
   {
     $preDeleteCount = count(self::$collectiblePostgresqlRepository->findAll());
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     self::$collectiblePostgresqlRepository->delete($collectible->id());
 
     $this->assertCount($preDeleteCount, self::$collectiblePostgresqlRepository->findAll());
@@ -53,13 +53,13 @@ class CollectiblePostgresqlRepositoryTest extends BaseTestCase
 
   public function testFindByIdWhenDoesExist(): void 
   {
-    $collectible = CollectibleMother::create();
+    $collectible = CollectibleStub::fixture();
     $this->assertEquals($collectible->toArray(), self::$collectiblePostgresqlRepository->findById($collectible->id())->toArray());
   }
 
   public function testFindByIdWhenDoesNotExist(): void 
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->assertNull(self::$collectiblePostgresqlRepository->findById($collectible->id()));
   }
 } 

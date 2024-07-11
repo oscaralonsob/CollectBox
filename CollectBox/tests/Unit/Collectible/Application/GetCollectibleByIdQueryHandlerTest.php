@@ -7,9 +7,9 @@ namespace Tests\Unit\Collectible\Application;
 use App\Collectible\Application\GetCollectibleByIdQuery;
 use App\Collectible\Application\GetCollectibleByIdQueryHandler;
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
 
 class GetCollectibleByIdQueryHandlerTest extends TestCase
 {
@@ -24,7 +24,7 @@ class GetCollectibleByIdQueryHandlerTest extends TestCase
 
   public function testFindByIdIsCalled(): void
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->collectibleRepository->expects($this->once())->method('findById')->willReturn($collectible);
 
     $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()->value()));
@@ -32,7 +32,7 @@ class GetCollectibleByIdQueryHandlerTest extends TestCase
 
   public function testACollectibleIsReturned(): void
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->collectibleRepository->method('findById')->willReturn($collectible);
 
     $result = $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()->value()));
@@ -42,7 +42,7 @@ class GetCollectibleByIdQueryHandlerTest extends TestCase
 
   public function testNoCollectibleIsReturned(): void
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->collectibleRepository->method('findById')->willReturn(null);
 
     $result = $this->getCollectibleByIdQueryHandler->execute(GetCollectibleByIdQuery::create($collectible->id()->value()));

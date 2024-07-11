@@ -8,7 +8,7 @@ use App\Collectible\Infrastructure\Persistance\Postgresql\CollectiblePostgresqlR
 use PDO;
 use Dotenv;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
-use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
+use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
 
 abstract class BaseTestCase extends PHPUnit_TestCase
 {
@@ -44,7 +44,7 @@ abstract class BaseTestCase extends PHPUnit_TestCase
 
   private function initDatabase(): void 
   {
-    $collectible = CollectibleMother::create();
+    $collectible = CollectibleStub::fixture();
     self::$collectiblePostgresqlRepository->save($collectible);
   }
 }

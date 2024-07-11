@@ -6,10 +6,10 @@ namespace Tests\Unit\Collectible\Infrastructure\UI\Handler;
 
 use App\Collectible\Application\GetCollectibleByIdQueryHandler;
 use App\Collectible\Infrastructure\UI\Handler\GetCollectibleHandler;
-use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
+use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
 
 class GetCollectibleHandlerTest extends TestCase
 {
@@ -26,7 +26,7 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturn200WhenDoesExist(): void
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn($collectible);
 
@@ -38,7 +38,7 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturnCollectibleWhenDoesExist(): void
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn($collectible);
 
@@ -50,7 +50,7 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturn404WhenDoesNotExist(): void
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn(null);
 
@@ -62,7 +62,7 @@ class GetCollectibleHandlerTest extends TestCase
 
   public function testHandlerReturnNoCollectibleWhenDoesNotExist(): void
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
     $this->getCollectibleByIdQueryHandler->method('execute')->willReturn(null);
 

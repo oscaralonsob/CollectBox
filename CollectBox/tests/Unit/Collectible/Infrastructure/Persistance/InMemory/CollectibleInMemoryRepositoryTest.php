@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Infrastructure\Persistance\InMemory;
 
 use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
-use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
 use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
 
 class CollectibleInMemoryRepositoryTest extends TestCase
 {
@@ -19,7 +19,7 @@ class CollectibleInMemoryRepositoryTest extends TestCase
 
   public function testSaveInsert(): void 
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
 
     $this->collectibleInMemoryRepository->save($collectible);
 
@@ -28,7 +28,7 @@ class CollectibleInMemoryRepositoryTest extends TestCase
 
   public function testSaveUpdateWhenDoesExist(): void 
   {
-    $collectible = CollectibleMother::create();
+    $collectible = CollectibleStub::fixture();
 
     $this->collectibleInMemoryRepository->save($collectible);
 
@@ -37,7 +37,7 @@ class CollectibleInMemoryRepositoryTest extends TestCase
 
   public function testDeleteWhenDoesExist(): void 
   {
-    $collectible = CollectibleMother::create();
+    $collectible = CollectibleStub::fixture();
     $this->collectibleInMemoryRepository->delete($collectible->id());
 
     $this->assertCount(1, $this->collectibleInMemoryRepository->findAll());
@@ -45,7 +45,7 @@ class CollectibleInMemoryRepositoryTest extends TestCase
 
   public function testDeleteWhenDoesNotExist(): void 
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->collectibleInMemoryRepository->delete($collectible->id());
 
     $this->assertCount(2, $this->collectibleInMemoryRepository->findAll());
@@ -58,13 +58,13 @@ class CollectibleInMemoryRepositoryTest extends TestCase
 
   public function testFindByIdWhenDoesExist(): void 
   {
-    $collectible = CollectibleMother::create();
+    $collectible = CollectibleStub::fixture();
     $this->assertEquals($collectible->toArray(), $this->collectibleInMemoryRepository->findById($collectible->id())->toArray());
   }
 
   public function testFindByIdWhenDoesNotExist(): void 
   {
-    $collectible = CollectibleMother::createRandom();
+    $collectible = CollectibleStub::random();
     $this->assertNull($this->collectibleInMemoryRepository->findById($collectible->id()));
   }
 } 

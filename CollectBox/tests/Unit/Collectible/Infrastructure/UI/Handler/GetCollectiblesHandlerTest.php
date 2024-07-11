@@ -7,11 +7,10 @@ namespace Tests\Unit\Collectible\Infrastructure\UI\Handler;
 use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\Handler\GetCollectiblesHandler;
-use Tests\Unit\Collectible\Domain\Aggregate\CollectibleMother;
-use Tests\Unit\Collectible\Domain\Entity\CollectibleCollectionMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
+use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCollectionStub;
 
 class GetCollectiblesHandlerTest extends TestCase
 {
@@ -28,9 +27,8 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn200(): void
   {
-    $collectible = CollectibleMother::createRandom();
-    $collectibles = CollectibleCollectionMother::create();
-    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
+    $collectibles = CollectibleCollectionStub::random();
+
     $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
 
     $response = $this->getCollectiblesHandler->handle($this->request);
@@ -41,9 +39,8 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturn200WhenEmpty(): void
   {
-    $collectible = CollectibleMother::createRandom();
-    $collectibles = CollectibleCollectionMother::createEmpty();
-    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
+    $collectibles = CollectibleCollectionStub::empty();
+
     $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
 
     $response = $this->getCollectiblesHandler->handle($this->request);
@@ -54,9 +51,8 @@ class GetCollectiblesHandlerTest extends TestCase
 
   public function testHandlerReturnCollectibles(): void
   {
-    $collectible = CollectibleMother::createRandom();
-    $collectibles = CollectibleCollectionMother::create();
-    $this->request->method('getAttribute')->willReturn($collectible->id()->value());
+    $collectibles = CollectibleCollectionStub::random();
+
     $this->getCollectiblesQueryHandler->method('execute')->willReturn($collectibles);
 
     $response = $this->getCollectiblesHandler->handle($this->request);

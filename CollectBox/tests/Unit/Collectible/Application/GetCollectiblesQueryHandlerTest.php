@@ -7,9 +7,9 @@ namespace Tests\Unit\Collectible\Application;
 use App\Collectible\Application\GetCollectiblesQuery;
 use App\Collectible\Application\GetCollectiblesQueryHandler;
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use Tests\Unit\Collectible\Domain\Entity\CollectibleCollectionMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCollectionStub;
 
 class GetCollectiblesQueryHandlerTest extends TestCase
 {
@@ -24,7 +24,7 @@ class GetCollectiblesQueryHandlerTest extends TestCase
 
   public function testFindAllIsCalled(): void
   {
-    $collectibles = CollectibleCollectionMother::createEmpty();
+    $collectibles = CollectibleCollectionStub::random();
     $this->collectibleRepository->expects($this->once())->method('findAll')->willReturn($collectibles);
 
     $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());
@@ -32,7 +32,7 @@ class GetCollectiblesQueryHandlerTest extends TestCase
 
   public function testCollectiblesAreReturned(): void
   {
-    $collectibles = CollectibleCollectionMother::createEmpty();
+    $collectibles = CollectibleCollectionStub::random();
     $this->collectibleRepository->method('findAll')->willReturn($collectibles);
 
     $result = $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());
@@ -42,7 +42,7 @@ class GetCollectiblesQueryHandlerTest extends TestCase
 
   public function testEmptyArrayIsReturnedIfNoCollection(): void
   {
-    $this->collectibleRepository->method('findAll')->willReturn(CollectibleCollectionMother::createEmpty());
+    $this->collectibleRepository->method('findAll')->willReturn(CollectibleCollectionStub::empty());
 
     $result = $this->getCollectiblesQueryHandler->execute(GetCollectiblesQuery::create());
 
