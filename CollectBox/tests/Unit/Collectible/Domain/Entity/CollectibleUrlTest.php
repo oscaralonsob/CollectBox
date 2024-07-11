@@ -12,9 +12,16 @@ class CollectibleUrlTest extends TestCase
 {
   public function testCreate(): void
   {
-    $domainId = CollectibleUrl::create("https://wiki.serenesforest.net/index.php/test");
+    $domainUrl = CollectibleUrl::create("https://wiki.serenesforest.net/index.php/test");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($domainUrl);
+  }
+
+  public function testCreateFromRelative(): void
+  {
+    $domainUrl = CollectibleUrl::createFromRelative("test");
+
+    $this->assertNotNull($domainUrl);
   }
 
   public function testCreateFromInvalid(): void

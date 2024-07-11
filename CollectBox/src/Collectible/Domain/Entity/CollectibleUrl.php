@@ -9,7 +9,7 @@ use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
 class CollectibleUrl extends NonEmptyString
 {
-  private const URL = "https://wiki.serenesforest.net/index.php";
+  private const URL = "https://wiki.serenesforest.net/index.php/";
 
   private function __construct(string $value)
   {
@@ -20,6 +20,11 @@ class CollectibleUrl extends NonEmptyString
   public static function create(string $value): self
   {
     return new self($value);
+  }
+
+  public static function createFromRelative(string $value): self
+  {
+    return new self(self::URL . $value);
   }
 
   private function guard(string $value): void
