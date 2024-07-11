@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use App\Collectible\Infrastructure\Persistance\InMemory\CollectibleInMemoryRepository;
 use App\Collectible\Infrastructure\Persistance\Postgresql\CollectiblePostgresqlRepository;
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
