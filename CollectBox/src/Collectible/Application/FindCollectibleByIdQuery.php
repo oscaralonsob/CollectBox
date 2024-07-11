@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Collectible\Application;
 
-class GetCollectibleByIdQuery
+class FindCollectibleByIdQuery
 {
   private function __construct(private string $id) {}
 

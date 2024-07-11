@@ -8,13 +8,13 @@ use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
 
-class GetCollectibleByIdQueryHandler
+class FindCollectibleByIdQueryHandler
 {
   public function __construct(private CollectibleRepository $collectibleRepository)
   {
   }
 
-  public function execute(GetCollectibleByIdQuery $query): ?Collectible
+  public function execute(FindCollectibleByIdQuery $query): ?Collectible
   {
     return $this->collectibleRepository->findById(DomainId::create($query->id()));
   }
