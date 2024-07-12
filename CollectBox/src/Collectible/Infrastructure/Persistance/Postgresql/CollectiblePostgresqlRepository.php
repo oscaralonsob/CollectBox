@@ -9,6 +9,7 @@ use App\Collectible\Domain\Entity\CollectibleCode;
 use App\Collectible\Domain\Entity\CollectibleCollection;
 use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Entity\CollectibleUrl;
+use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\Collection;
 use App\Shared\Domain\Entity\ValueObject\DomainId;
@@ -24,24 +25,14 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
   {
     $stmt = $this->pdo->prepare(
       "INSERT INTO collectible (id, code, name, url) 
-            VALUES (:id, :code, :name, :url) 
-            ON CONFLICT (id) DO UPDATE SET
-            code = EXCLUDED.code,
-            name = EXCLUDED.name,
-            url = EXCLUDED.url"
+            VALUES (:id, :code, :name, :url)"
     );
       
     $stmt->execute($this->fromObject($collectible));
     return $collectible;
   }
 
-  public function delete(DomainId $collectibleId): DomainId 
-  {
-    $stmt = $this->pdo->prepare("DELETE FROM collectible WHERE id = :id");
-    $stmt->execute(["id" => $collectibleId->value()]);
-    return DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0");
-  }
-
+  //TODO: add criteria. Should be search
   public function findAll(): Collection
   {
     $stmt = $this->pdo->prepare("SELECT * FROM collectible");
@@ -58,13 +49,17 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
     return $collection;
   }
 
-  public function findById(DomainId $id): ?Collectible 
+  public function findById(DomainId $id): Collectible 
   {
     $stmt = $this->pdo->prepare("SELECT * FROM collectible WHERE id = :id");
     $stmt->execute(["id" => $id->value()]);
     $collectible = $stmt->fetch(PDO::FETCH_OBJ);
+
+    if (!$collectible) {
+      throw CollectibleNotFoundException::create($id);
+    }
     
-    return $collectible ? $this->toObject($collectible) : null;
+    return $this->toObject($collectible);
   }
 
   private function toObject(object $collectible): Collectible

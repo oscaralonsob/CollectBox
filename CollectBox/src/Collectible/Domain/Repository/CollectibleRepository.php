@@ -12,9 +12,7 @@ interface CollectibleRepository
 {
   public function save(Collectible $collectible): Collectible ;
 
-  public function delete(DomainId $collectibleId): DomainId;
-
   public function findAll(): Collection;
 
-  public function findById(DomainId $id): ?Collectible;
+  public function findById(DomainId $id): Collectible;
 } 

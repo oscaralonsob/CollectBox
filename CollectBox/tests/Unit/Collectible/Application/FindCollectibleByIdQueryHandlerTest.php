@@ -6,6 +6,7 @@ namespace Tests\Unit\Collectible\Application;
 
 use App\Collectible\Application\FindCollectibleByIdQuery;
 use App\Collectible\Application\FindCollectibleByIdQueryHandler;
+use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -40,13 +41,12 @@ class FindCollectibleByIdQueryHandlerTest extends TestCase
     $this->assertEquals($collectible, $result);
   }
 
-  public function testNoCollectibleIsReturned(): void
+  public function testErrorIsThrowIfCollectibleIsNotFound(): void
   {
+    $this->expectException(CollectibleNotFoundException::class);
     $collectible = CollectibleStub::random();
-    $this->collectibleRepository->method('findById')->willReturn(null);
+    $this->collectibleRepository->method('findById')->willThrowException(CollectibleNotFoundException::create($collectible->id()));
 
     $result = $this->findCollectibleByIdQueryHandler->execute(FindCollectibleByIdQuery::create($collectible->id()->value()));
-
-    $this->assertNull($result);
   }
 }
