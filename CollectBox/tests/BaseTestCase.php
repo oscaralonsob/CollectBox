@@ -8,6 +8,7 @@ use PDO;
 use Dotenv;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
 use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\DataFixtures\DataLoader\CollectibleFixtures;
 
 abstract class BaseTestCase extends PHPUnit_TestCase
 {
@@ -33,26 +34,16 @@ abstract class BaseTestCase extends PHPUnit_TestCase
     $this->initDatabase();
   }
 
+  //TODO: migrate to purger (like fixtures)
   private function truncateDatabase(): void 
   {
     $stmt = self::$pdo->prepare("DELETE FROM collectible");
     $stmt->execute();
   }
 
-  //TODO: load fixtures class
   private function initDatabase(): void 
   {
-    $collectible = CollectibleStub::fixture();
-    $stmt = self::$pdo->prepare(
-      "INSERT INTO collectible (id, code, name, url) 
-            VALUES (:id, :code, :name, :url)"
-    );
-      
-    $stmt->execute([
-      "id" => $collectible->id()->value(),
-      "code" => $collectible->code()->value(),
-      "name" => $collectible->name()->value(),
-      "url" => $collectible->url()->value(),
-    ]);
+    $loader = new CollectibleFixtures();
+    $loader->load(self::$pdo);
   }
 }

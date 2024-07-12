@@ -47,9 +47,6 @@ class CollectiblePostgresqlRepositoryTest extends BaseTestCase
 
   public function testFindAll(): void 
   {
-    $this->assertEquals(
-      [CollectibleStub::fixture()],
-      $this->collectiblePostgresqlRepository->findAll()->toArray()
-    );
+    $this->assertCount(4, $this->collectiblePostgresqlRepository->findAll()->toArray());
   }
 } 

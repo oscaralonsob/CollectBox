@@ -30,13 +30,12 @@ class CollectibleStub
     );
   }
 
-  //TODO: modify to load fixture process
   public static function fixture(): Collectible {
     return Collectible::create(
-      DomainId::create("ae8c868b-48cd-4457-9f2f-4c3f0d3d41a0"),  
-      CollectibleCode::create("B01-001N"), 
-      CollectibleName::create("Collectible 1"), 
-      CollectibleUrl::createFromRelative("Collectible-1")
+      DomainId::create("baca94a4-a209-45e1-be33-d079248122ee"),  
+      CollectibleCode::create("B04-001SR"), 
+      CollectibleName::create("Tsubasa Oribe: The Golden Idol"), 
+      CollectibleUrl::createFromRelative("")
     );
   }
 
