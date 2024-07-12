@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use App\Collectible\Infrastructure\Persistance\Postgresql\CollectiblePostgresqlRepository;
 use PDO;
 use Dotenv;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
@@ -12,11 +11,11 @@ use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
 
 abstract class BaseTestCase extends PHPUnit_TestCase
 {
-  protected static CollectiblePostgresqlRepository $collectiblePostgresqlRepository;
+  protected static PDO $pdo;
 
   protected function setUp(): void
   {
-    if (!isset(self::$collectiblePostgresqlRepository)) {
+    if (!isset(self::$pdo)) {
       require __DIR__ . '/../vendor/autoload.php';
       $dependencies = require_once __DIR__ . "/../config/Dependencies.php";
 
@@ -27,8 +26,7 @@ abstract class BaseTestCase extends PHPUnit_TestCase
       $dependencies($builder);
       $container = $builder->build();
       $app = \DI\Bridge\Slim\Bridge::create($container);
-      $pdo = $app->getContainer()->get(PDO::class);
-      self::$collectiblePostgresqlRepository = new CollectiblePostgresqlRepository($pdo);
+      self::$pdo = $app->getContainer()->get(PDO::class);
     }
 
     $this->truncateDatabase();
@@ -37,14 +35,24 @@ abstract class BaseTestCase extends PHPUnit_TestCase
 
   private function truncateDatabase(): void 
   {
-    foreach (self::$collectiblePostgresqlRepository->findAll() as $collectible) {
-      self::$collectiblePostgresqlRepository->delete($collectible->id());
-    }
+    $stmt = self::$pdo->prepare("DELETE FROM collectible");
+    $stmt->execute();
   }
 
+  //TODO: load fixtures class
   private function initDatabase(): void 
   {
     $collectible = CollectibleStub::fixture();
-    self::$collectiblePostgresqlRepository->save($collectible);
+    $stmt = self::$pdo->prepare(
+      "INSERT INTO collectible (id, code, name, url) 
+            VALUES (:id, :code, :name, :url)"
+    );
+      
+    $stmt->execute([
+      "id" => $collectible->id()->value(),
+      "code" => $collectible->code()->value(),
+      "name" => $collectible->name()->value(),
+      "url" => $collectible->url()->value(),
+    ]);
   }
 }
