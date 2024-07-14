@@ -6,9 +6,9 @@ namespace Tests\Infrastructure\DataFixtures\DataLoader;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleCode;
+use App\Collectible\Domain\Entity\CollectibleId;
 use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Entity\CollectibleUrl;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PDO;
 use Symfony\Component\Yaml\Yaml;
 
@@ -19,7 +19,7 @@ class CollectibleFixtures
   {
     foreach (Yaml::parseFile('tests/Infrastructure/DataFixtures/Fixtures/collectibles.yaml')['collectible'] as $collectibleFixture) {
       $collectible = Collectible::create(
-        DomainId::create($collectibleFixture['id']),
+        CollectibleId::create($collectibleFixture['id']),
         CollectibleCode::create($collectibleFixture['code']),
         CollectibleName::create($collectibleFixture['name']),
         CollectibleUrl::create($collectibleFixture['url'])

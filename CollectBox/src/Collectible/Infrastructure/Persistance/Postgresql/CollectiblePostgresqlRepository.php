@@ -7,12 +7,12 @@ namespace App\Collectible\Infrastructure\Persistance\Postgresql;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleCode;
 use App\Collectible\Domain\Entity\CollectibleCollection;
+use App\Collectible\Domain\Entity\CollectibleId;
 use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Entity\CollectibleUrl;
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Shared\Domain\Entity\Collection;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
 use PDO;
 
 class CollectiblePostgresqlRepository implements CollectibleRepository
@@ -49,7 +49,7 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
     return $collection;
   }
 
-  public function findById(DomainId $id): Collectible 
+  public function findById(CollectibleId $id): Collectible 
   {
     $stmt = $this->pdo->prepare("SELECT * FROM collectible WHERE id = :id");
     $stmt->execute(["id" => $id->value()]);
@@ -65,7 +65,7 @@ class CollectiblePostgresqlRepository implements CollectibleRepository
   private function toObject(object $collectible): Collectible
   {
     return Collectible::create(
-      DomainId::create($collectible->id), 
+      CollectibleId::create($collectible->id), 
       CollectibleCode::create($collectible->code), 
       CollectibleName::create($collectible->name), 
       CollectibleUrl::create($collectible->url) 

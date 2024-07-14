@@ -6,10 +6,10 @@ namespace App\Collectible\Application;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleCode;
+use App\Collectible\Domain\Entity\CollectibleId;
 use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Entity\CollectibleUrl;
 use App\Collectible\Domain\Repository\CollectibleRepository;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 class CreateCollectibleCommandHandler
 {
@@ -20,7 +20,7 @@ class CreateCollectibleCommandHandler
   public function execute(CreateCollectibleCommand $command): ?Collectible
   {
     $collectible = Collectible::create(
-      DomainId::createRandom(),
+      CollectibleId::createRandom(),
       CollectibleCode::create($command->code()),
       CollectibleName::create($command->name()),
       CollectibleUrl::create($command->url())

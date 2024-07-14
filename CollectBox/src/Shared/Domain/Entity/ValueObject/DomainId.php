@@ -19,14 +19,14 @@ class DomainId
     }
   }
 
-  public static function create(string $uuid): self
+  public static function create(string $uuid): static
   {
-    return new self($uuid);
+    return new static($uuid);
   }
 
-  public static function createRandom(): self
+  public static function createRandom(): static
   {
-    return new self(Uuid::uuid4()->toString());
+    return new static(Uuid::uuid4()->toString());
   }
 
   public function value(): string

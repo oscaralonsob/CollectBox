@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Collectible\Domain\Aggregate;
 
 use App\Collectible\Domain\Entity\CollectibleCode;
+use App\Collectible\Domain\Entity\CollectibleId;
 use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Entity\CollectibleUrl;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 class Collectible 
 {
   private function __construct(
-    private DomainId $id,
+    private CollectibleId $id,
     private CollectibleCode $code,
     private CollectibleName $name,
     private CollectibleUrl $url
@@ -20,7 +20,7 @@ class Collectible
   }
   
   public static function create(
-    DomainId $id,
+    CollectibleId $id,
     CollectibleCode $code,
     CollectibleName $name,
     CollectibleUrl $url
@@ -28,7 +28,7 @@ class Collectible
     return new self($id, $code, $name, $url);
   }
 
-  public function id(): DomainId
+  public function id(): CollectibleId
   {
     return $this->id;
   }

@@ -12,44 +12,44 @@ class CollectibleCodeTest extends TestCase
 {
   public function testCreateNormal(): void
   {
-    $domainId = CollectibleCode::create("B01-001N");
+    $collectibleCode = CollectibleCode::create("B01-001N");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($collectibleCode);
   }
 
   public function testCreateHighNormal(): void
   {
-    $domainId = CollectibleCode::create("B01-001HN");
+    $collectibleCode = CollectibleCode::create("B01-001HN");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($collectibleCode);
   }
 
   public function testCreateRare(): void
   {
-    $domainId = CollectibleCode::create("B01-001R");
+    $collectibleCode = CollectibleCode::create("B01-001R");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($collectibleCode);
   }
   
   public function testCreateRarePlus(): void
   {
-    $domainId = CollectibleCode::create("B01-001R+");
+    $collectibleCode = CollectibleCode::create("B01-001R+");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($collectibleCode);
   }
   
   public function testCreateSuperRare(): void
   {
-    $domainId = CollectibleCode::create("B01-001SR");
+    $collectibleCode = CollectibleCode::create("B01-001SR");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($collectibleCode);
   }
   
   public function testCreatePlus(): void
   {
-    $domainId = CollectibleCode::create("B01-001SR+");
+    $collectibleCode = CollectibleCode::create("B01-001SR+");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($collectibleCode);
   }
 
   public function testCreateFromInvalid(): void

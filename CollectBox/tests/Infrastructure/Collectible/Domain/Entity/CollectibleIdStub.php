@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\Collectible\Domain\Entity;
 
-//TODO: move to shared
-use App\Shared\Domain\Entity\ValueObject\DomainId;
+use App\Collectible\Domain\Entity\CollectibleId;
 use Faker\Factory;
 
 class CollectibleIdStub
 {
-  public static function random(): DomainId
+  public static function random(): CollectibleId
   {
     $faker = Factory::create();
     
-    return DomainId::create($faker->uuid);
+    return CollectibleId::create($faker->uuid);
   }
 }

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Collectible\Domain\Repository;
 
 use App\Collectible\Domain\Aggregate\Collectible;
+use App\Collectible\Domain\Entity\CollectibleId;
 use App\Shared\Domain\Entity\Collection;
-use App\Shared\Domain\Entity\ValueObject\DomainId;
 
 interface CollectibleRepository
 {
@@ -14,5 +14,5 @@ interface CollectibleRepository
 
   public function findAll(): Collection;
 
-  public function findById(DomainId $id): Collectible;
+  public function findById(CollectibleId $id): Collectible;
 } 

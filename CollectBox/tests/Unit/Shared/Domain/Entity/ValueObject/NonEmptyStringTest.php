@@ -12,9 +12,9 @@ class NonEmptyStringTest extends TestCase
 {
   public function testCreate(): void
   {
-    $domainId = NonEmptyString::create("String test");
+    $string = NonEmptyString::create("String test");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($string);
   }
 
   public function testCreateFromEmpty(): void
@@ -27,25 +27,25 @@ class NonEmptyStringTest extends TestCase
   public function testEqualsToWhenSame(): void
   {
     $value = "String test";
-    $domainId1 = NonEmptyString::create($value);
-    $domainId2 = NonEmptyString::create($value);
+    $string1 = NonEmptyString::create($value);
+    $string2 = NonEmptyString::create($value);
 
-    $this->assertTrue($domainId1->equalsTo($domainId2));
+    $this->assertTrue($string1->equalsTo($string2));
   }
 
   public function testEqualsToWhenDifferent(): void
   {
-    $domainId1 = NonEmptyString::create("String test 1");
-    $domainId2 = NonEmptyString::create("String test 2");
+    $string1 = NonEmptyString::create("String test 1");
+    $string2 = NonEmptyString::create("String test 2");
 
-    $this->assertFalse($domainId1->equalsTo($domainId2));
+    $this->assertFalse($string1->equalsTo($string2));
   }
 
   public function testValue(): void
   {
     $value = "String Test 1";
-    $domainId = NonEmptyString::create($value);
+    $string = NonEmptyString::create($value);
 
-    $this->assertEquals($value, $domainId->value());
+    $this->assertEquals($value, $string->value());
   }
 }

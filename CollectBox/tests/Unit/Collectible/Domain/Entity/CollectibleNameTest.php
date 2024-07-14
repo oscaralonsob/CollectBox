@@ -12,9 +12,9 @@ class CollectibleNameTest extends TestCase
 {
   public function testCreate(): void
   {
-    $domainId = CollectibleName::create("Name test");
+    $domainName = CollectibleName::create("Name test");
 
-    $this->assertNotNull($domainId);
+    $this->assertNotNull($domainName);
   }
 
   public function testCreateFromInvalid(): void
