@@ -23,6 +23,13 @@ class CollectibleCodeTest extends TestCase
 
     $this->assertNotNull($collectibleCode);
   }
+  
+  public function testEspecialVerions(): void
+  {
+    $collectibleCode = CollectibleCode::create("B01-001X");
+
+    $this->assertNotNull($collectibleCode);
+  }
 
   public function testCreateRare(): void
   {

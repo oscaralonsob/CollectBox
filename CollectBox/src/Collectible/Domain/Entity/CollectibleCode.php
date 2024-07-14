@@ -9,7 +9,7 @@ use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 
 class CollectibleCode extends NonEmptyString
 {
-  private const VALIDATION_REGEX = "/B[0-9]{2}\-[0-9]{3}(N|HN|S?R\+?)/";
+  private const VALIDATION_REGEX = "/B[0-9]{2}\-[0-9]{3}(N|HN|X|S?R\+?)/";
 
   private function __construct(string $value)
   {

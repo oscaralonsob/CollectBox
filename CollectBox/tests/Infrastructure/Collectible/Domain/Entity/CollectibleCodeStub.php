@@ -9,7 +9,7 @@ use Faker\Factory;
 
 class CollectibleCodeStub
 {
-  private const VALIDATION_REGEX = "/B[0-9]{2}\-[0-9]{3}(N|HN|S?R\+?)/";
+  private const VALIDATION_REGEX = "/B[0-9]{2}\-[0-9]{3}(N|HN|X|S?R\+?)/";
 
   public static function random(): CollectibleCode
   {
