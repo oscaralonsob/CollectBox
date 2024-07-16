@@ -14,14 +14,23 @@ class MigrationCommand extends Command
   {
     parent::configure();
 
-    $this->setName('example');
-    $this->setDescription('A sample command');
+    $this->setName('migrations');
+    $this->setDescription('Execute all migrations');
   }
   
   protected function execute(InputInterface $input, OutputInterface $output): int
   {
-    $output->writeln(sprintf('<info>Hello, World!</info>'));
+    $migrations = BaseMigration::getMigrations();
+    $count = 0;
+    $output->writeln(sprintf('<info>Executing %s migrations</info>', count($migrations)));
+    
+    foreach ($migrations as $migration) {
+      $count++;
+      $migration->up();
+      $output->writeln(sprintf('<info>  - Executed migration %s successfully</info>', $count));
+    }
 
+    $output->writeln(sprintf('<info>Migrations executed</info>'));
     return 0;
   }
 }

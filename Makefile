@@ -1,5 +1,5 @@
 build:
-	docker build -t my-php-app .
+	docker build --no-cache -t my-php-app .
 
 run:
 	docker run --name collectbox -d -p 8080:80 my-php-app
