@@ -7,7 +7,6 @@ namespace Tests;
 use PDO;
 use Dotenv;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
-use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
 use Tests\Infrastructure\DataFixtures\DataLoader\CollectibleFixtures;
 
 abstract class BaseTestCase extends PHPUnit_TestCase
