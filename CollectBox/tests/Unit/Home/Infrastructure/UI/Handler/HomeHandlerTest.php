@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Home\Infrastructure\UI\Handler;
 
 use App\Home\Infrastructure\UI\Handler\HomeHandler;
-use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class HomeHandlerTest extends TestCase
+class HomeHandlerTest extends BaseTestCase
 {
   public function testHandlerReturnHello(): void
   {

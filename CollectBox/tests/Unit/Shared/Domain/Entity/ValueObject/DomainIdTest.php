@@ -6,9 +6,9 @@ namespace Tests\Unit\Shared\Domain\Entity\ValueObject;
 
 use App\Shared\Domain\Entity\ValueObject\DomainId;
 use App\Shared\Domain\Exception\UuidInvalidException;
-use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class DomainIdTest extends TestCase
+class DomainIdTest extends BaseTestCase
 {
   public function testCreateFromString(): void
   {

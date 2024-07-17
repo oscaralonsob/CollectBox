@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Domain\Aggregate;
 
 use App\Collectible\Domain\Aggregate\Collectible;
-use PHPUnit\Framework\TestCase;
 use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCodeStub;
 use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleIdStub;
 use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleNameStub;
 use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleUrlStub;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class CollectibleTest extends TestCase
+class CollectibleTest extends BaseTestCase
 {
   public function testToArrayIsCorrect(): void
   {

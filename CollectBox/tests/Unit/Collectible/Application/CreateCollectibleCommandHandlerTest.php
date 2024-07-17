@@ -8,10 +8,10 @@ use App\Collectible\Application\CreateCollectibleCommand;
 use App\Collectible\Application\CreateCollectibleCommandHandler;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class CreateCollectibleCommandHandlerTest extends TestCase
+class CreateCollectibleCommandHandlerTest extends BaseTestCase
 {
   private CollectibleRepository|MockObject $collectibleRepository;
   private CreateCollectibleCommandHandler $createCollectibleCommandHandler;

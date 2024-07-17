@@ -9,10 +9,10 @@ use App\Collectible\Application\FindCollectibleByIdQueryHandler;
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class FindCollectibleByIdQueryHandlerTest extends TestCase
+class FindCollectibleByIdQueryHandlerTest extends BaseTestCase
 {
   private CollectibleRepository|MockObject $collectibleRepository;
   private FindCollectibleByIdQueryHandler $findCollectibleByIdQueryHandler;

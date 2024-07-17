@@ -8,11 +8,11 @@ use App\Collectible\Application\SearchCollectiblesQueryHandler;
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\Handler\GetCollectiblesHandler;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCollectionStub;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class GetCollectiblesHandlerTest extends TestCase
+class GetCollectiblesHandlerTest extends BaseTestCase
 {
   private ServerRequestInterface|MockObject $request;
   private SearchCollectiblesQueryHandler|MockObject $searchCollectiblesQueryHandler;

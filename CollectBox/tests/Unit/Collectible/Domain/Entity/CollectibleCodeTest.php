@@ -6,9 +6,9 @@ namespace Tests\Unit\Collectible\Domain\Entity;
 
 use App\Collectible\Domain\Entity\CollectibleCode;
 use App\Collectible\Domain\Exception\CollectibleCodeInvalidException;
-use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class CollectibleCodeTest extends TestCase
+class CollectibleCodeTest extends BaseTestCase
 {
   public function testCreateNormal(): void
   {

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Shared\Domain\Entity;
 
 use App\Shared\Domain\Entity\Collection;
-use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class CollectionTest extends TestCase
+class CollectionTest extends BaseTestCase
 {
   public function testEmptyCollectionCreation(): void
   {

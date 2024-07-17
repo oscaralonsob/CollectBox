@@ -6,11 +6,11 @@ namespace Tests\Unit\Collectible\Domain\Entity;
 
 use App\Collectible\Domain\Entity\CollectibleCollection;
 use App\Shared\Domain\Exception\CollectionInvalidTypeException;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class CollectibleCollectionTest extends TestCase
+class CollectibleCollectionTest extends BaseTestCase
 {
   public function testCollectionCreation(): void
   {

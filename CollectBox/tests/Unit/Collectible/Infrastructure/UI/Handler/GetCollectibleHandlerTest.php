@@ -7,11 +7,11 @@ namespace Tests\Unit\Collectible\Infrastructure\UI\Handler;
 use App\Collectible\Application\FindCollectibleByIdQueryHandler;
 use App\Collectible\Infrastructure\UI\Handler\GetCollectibleHandler;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class GetCollectibleHandlerTest extends TestCase
+class GetCollectibleHandlerTest extends BaseTestCase
 {
   private ServerRequestInterface|MockObject $request;
   private FindCollectibleByIdQueryHandler|MockObject $findCollectibleByIdQueryHandler;

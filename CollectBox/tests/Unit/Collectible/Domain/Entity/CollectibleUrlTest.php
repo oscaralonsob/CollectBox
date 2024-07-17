@@ -6,9 +6,9 @@ namespace Tests\Unit\Collectible\Domain\Entity;
 
 use App\Collectible\Domain\Entity\CollectibleUrl;
 use App\Collectible\Domain\Exception\CollectibleUrlInvalidException;
-use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class CollectibleUrlTest extends TestCase
+class CollectibleUrlTest extends BaseTestCase
 {
   public function testCreate(): void
   {

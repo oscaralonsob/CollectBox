@@ -6,9 +6,9 @@ namespace Tests\Unit\Collectible\Domain\Entity;
 
 use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Exception\CollectibleNameInvalidException;
-use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class CollectibleNameTest extends TestCase
+class CollectibleNameTest extends BaseTestCase
 {
   public function testCreate(): void
   {

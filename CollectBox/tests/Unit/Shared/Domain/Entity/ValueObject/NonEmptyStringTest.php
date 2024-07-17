@@ -6,9 +6,9 @@ namespace Tests\Unit\Shared\Domain\Entity\ValueObject;
 
 use App\Shared\Domain\Entity\ValueObject\NonEmptyString;
 use App\Shared\Domain\Exception\NonEmptyStringInvalidException;
-use PHPUnit\Framework\TestCase;
+use Tests\Infrastructure\TestCase\BaseTestCase;
 
-class NonEmptyStringTest extends TestCase
+class NonEmptyStringTest extends BaseTestCase
 {
   public function testCreate(): void
   {
