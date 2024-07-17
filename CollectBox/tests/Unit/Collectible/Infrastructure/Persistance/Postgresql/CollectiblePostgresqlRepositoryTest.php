@@ -6,47 +6,42 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Infrastructure\Persistance\Postgresql;
 
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
+use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Collectible\Infrastructure\Persistance\Postgresql\CollectiblePostgresqlRepository;
-use Tests\BaseTestCase;
 use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\TestCase\RepositoryTestCase;
 
-class CollectiblePostgresqlRepositoryTest extends BaseTestCase
+class CollectiblePostgresqlRepositoryTest extends RepositoryTestCase
 {
-  private CollectiblePostgresqlRepository $collectiblePostgresqlRepository;
-
-  public function setUp(): void 
-  {
-    parent::setUp();
-    //TODO: should be DI
-    if (!isset($this->collectiblePostgresqlRepository)) {
-      $this->collectiblePostgresqlRepository = new CollectiblePostgresqlRepository(self::$pdo);
-    }
-  }
-
   public function testSaveInsert(): void 
   {
     $collectible = CollectibleStub::random();
 
-    $this->collectiblePostgresqlRepository->save($collectible);
+    $this->repository()->save($collectible);
 
-    $this->assertSame($collectible->toArray(), $this->collectiblePostgresqlRepository->findById($collectible->id())->toArray());
+    $this->assertSame($collectible->toArray(), $this->repository()->findById($collectible->id())->toArray());
   }
 
   public function testFindByIdWhenDoesExist(): void 
   {
     $collectible = CollectibleStub::fixture();
-    $this->assertEquals($collectible->toArray(), $this->collectiblePostgresqlRepository->findById($collectible->id())->toArray());
+    $this->assertEquals($collectible->toArray(), $this->repository()->findById($collectible->id())->toArray());
   }
 
   public function testFindByIdWhenDoesNotExist(): void 
   {
     $collectible = CollectibleStub::random();
     $this->expectException(CollectibleNotFoundException::class);
-    $this->collectiblePostgresqlRepository->findById($collectible->id());
+    $this->repository()->findById($collectible->id());
   }
 
   public function testFindAll(): void 
   {
-    $this->assertCount(4, $this->collectiblePostgresqlRepository->findAll()->toArray());
+    $this->assertCount(4, $this->repository()->findAll()->toArray());
+  }
+
+  public function repositoryClassName(): string
+  {
+    return CollectiblePostgresqlRepository::class;
   }
 } 

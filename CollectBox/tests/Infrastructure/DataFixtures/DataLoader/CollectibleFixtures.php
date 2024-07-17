@@ -38,4 +38,10 @@ class CollectibleFixtures
       ]);
     }
   }
+
+  public function purge(PDO $pdo): void
+  {
+    $stmt = $pdo->prepare("DELETE FROM collectible");
+    $stmt->execute();
+  }
 }
