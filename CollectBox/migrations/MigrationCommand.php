@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace Migrations;
 
+use Migrations\Version2024\InitMigration;
+use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrationCommand extends Command
 {
+  public function __construct(private PDO $pdo) 
+  {
+    parent::__construct();
+  }
+
   protected function configure(): void
   {
     parent::configure();
@@ -20,7 +27,7 @@ class MigrationCommand extends Command
   
   protected function execute(InputInterface $input, OutputInterface $output): int
   {
-    $migrations = BaseMigration::getMigrations();
+    $migrations = $this->getMigrations();
     $count = 0;
     $output->writeln(sprintf('<info>Executing %s migrations</info>', count($migrations)));
     
@@ -32,5 +39,12 @@ class MigrationCommand extends Command
 
     $output->writeln(sprintf('<info>Migrations executed</info>'));
     return 0;
+  }
+
+  private function getMigrations(): array 
+  {
+    return [
+      new InitMigration($this->pdo)
+    ];
   }
 }
