@@ -12,7 +12,7 @@ use App\Collectible\Domain\Entity\CollectibleUrl;
 use PDO;
 use Symfony\Component\Yaml\Yaml;
 
-class CollectibleFixtures
+class CollectibleFixtures implements Fixtures
 {
   //TODO: DI
   public function load(PDO $pdo): void

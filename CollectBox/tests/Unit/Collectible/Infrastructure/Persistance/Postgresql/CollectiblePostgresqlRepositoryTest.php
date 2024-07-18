@@ -6,13 +6,19 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Infrastructure\Persistance\Postgresql;
 
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
-use App\Collectible\Domain\Repository\CollectibleRepository;
 use App\Collectible\Infrastructure\Persistance\Postgresql\CollectiblePostgresqlRepository;
 use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\DataFixtures\DataLoader\CollectibleFixtures;
 use Tests\Infrastructure\TestCase\RepositoryTestCase;
 
 class CollectiblePostgresqlRepositoryTest extends RepositoryTestCase
 {
+  protected function setUp(): void
+  {
+    $this->fixtureLoader()->addFixtures(new CollectibleFixtures());
+    parent::setUp();
+  }
+
   public function testSaveInsert(): void 
   {
     $collectible = CollectibleStub::random();
