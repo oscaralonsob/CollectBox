@@ -12,6 +12,6 @@ class PasswordStub
   public static function random(): Password
   {
     $faker = Factory::create();
-    return Password::create($faker->password);
+    return Password::create($faker->password());
   }
 }

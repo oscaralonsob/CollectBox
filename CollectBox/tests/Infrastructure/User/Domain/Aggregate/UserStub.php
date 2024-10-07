@@ -28,9 +28,9 @@ class UserStub
 
   public static function fixture(): User {
     return User::create(
-      UserId::create("baca94a4-a209-45e1-be33-d079248122ee"),  
-      UserName::create("user"), 
-      Password::create("password")
+      UserId::create("ea509f98-e456-43bc-b5fb-49b688851785"),  
+      UserName::create("hadiur"), 
+      Password::create("Super!Contra1234")
     );
   }
 }
