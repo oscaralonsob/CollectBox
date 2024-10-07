@@ -6,16 +6,15 @@ namespace Migrations\Version2024;
 
 use Migrations\BaseMigration;
 
-class InitMigration extends BaseMigration
+class UserMigration extends BaseMigration
 {
   public function up(): void 
   {
     $this->executeSql(
-      "CREATE TABLE IF NOT exists collectible (
+      "CREATE TABLE IF NOT exists user_account (
         id VARCHAR(64) unique not null,
-        code VARCHAR(64) not null,
         name VARCHAR(64) not null,
-        url VARCHAR(64) not null
+        password VARCHAR(64) not null
       );"
     );
   }
@@ -23,7 +22,7 @@ class InitMigration extends BaseMigration
   public function down(): void 
   {
     $this->executeSql(
-      "DROP TABLE IF EXISTS collectible;"
+      "DROP TABLE IF EXISTS user_account;"
     );
   }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Migrations;
 
 use Migrations\Version2024\InitMigration;
+use Migrations\Version2024\UserMigration;
 use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -44,7 +45,8 @@ class MigrationCommand extends Command
   private function getMigrations(): array 
   {
     return [
-      new InitMigration($this->pdo)
+      new InitMigration($this->pdo),
+      new UserMigration($this->pdo)
     ];
   }
 }
