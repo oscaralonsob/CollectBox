@@ -13,7 +13,7 @@ class UserMigration extends BaseMigration
     $this->executeSql(
       "CREATE TABLE IF NOT exists user_account (
         id VARCHAR(64) unique not null,
-        name VARCHAR(64) not null,
+        user_name VARCHAR(64) not null,
         password VARCHAR(64) not null
       );"
     );

@@ -14,7 +14,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class CollectibleFixtures implements Fixtures
 {
-  //TODO: DI
   public function load(PDO $pdo): void
   {
     foreach (Yaml::parseFile('tests/Infrastructure/DataFixtures/Fixtures/collectibles.yaml')['collectible'] as $collectibleFixture) {

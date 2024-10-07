@@ -8,7 +8,6 @@ use PDO;
 
 interface Fixtures
 {
-  //UP and down
   public function load(PDO $pdo): void;
   public function purge(PDO $pdo): void;
 }

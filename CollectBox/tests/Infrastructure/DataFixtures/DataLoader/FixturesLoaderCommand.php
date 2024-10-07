@@ -48,7 +48,8 @@ class FixturesLoaderCommand extends Command
   private function getFixtures(): array 
   {
     return [
-      new CollectibleFixtures()
+      new CollectibleFixtures(),
+      new UserFixtures(),
     ];
   }
 }
