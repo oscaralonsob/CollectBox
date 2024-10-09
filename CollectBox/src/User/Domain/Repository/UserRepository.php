@@ -7,6 +7,7 @@ namespace App\User\Domain\Repository;
 use App\Shared\Domain\Entity\Collection;
 use App\User\Domain\Aggregate\User;
 use App\User\Domain\Entity\UserId;
+use App\User\Domain\Entity\UserName;
 
 interface UserRepository
 {
@@ -15,4 +16,7 @@ interface UserRepository
   public function findAll(): Collection;
 
   public function findById(UserId $id): User;
+
+  //TODO: criteria
+  public function searchByUserName(UserName $userName): ?User;
 } 

@@ -46,6 +46,19 @@ class UserPostgresqlRepositoryTest extends RepositoryTestCase
     $this->assertCount(1, $this->repository()->findAll()->toArray());
   }
 
+  public function testSearchByUserNameWhenDoesExist(): void 
+  {
+    $user = UserStub::fixture();
+    $foundUser = $this->repository()->searchByUserName($user->userName());
+    $this->assertEquals($user->toArray(), $foundUser->toArray());
+  }
+
+  public function testSearchByUserNameWhenDoesNotExist(): void 
+  {
+    $user = UserStub::random();
+    $this->assertEmpty($this->repository()->searchByUserName($user->userName()));
+  }
+
   public function repositoryClassName(): string
   {
     return UserPostgresqlRepository::class;

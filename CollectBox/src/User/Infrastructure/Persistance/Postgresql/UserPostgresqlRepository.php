@@ -61,6 +61,19 @@ class UserPostgresqlRepository implements UserRepository
     return $this->toObject($user);
   }
 
+  public function searchByUserName(UserName $userName): ?User 
+  {
+    $stmt = $this->pdo->prepare("SELECT * FROM user_account WHERE user_name = :userName");
+    $stmt->execute(["userName" => $userName->value()]);
+    $users = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    if (count($users) == 0) {
+      return null;
+    }
+    
+    return $this->toObject(current($users));
+  }
+
   private function toObject(object $user): User
   {
     return User::create(
