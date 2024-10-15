@@ -52,7 +52,7 @@ class GetCollectibleHandlerTest extends BaseTestCase
   {
     $collectible = CollectibleStub::random();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
-    $this->findCollectibleByIdQueryHandler->method('execute')->willReturn(null);
+    $this->findCollectibleByIdQueryHandler->method('execute')->willReturn(null);//TODO: Exception
 
     $response = $this->getCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();

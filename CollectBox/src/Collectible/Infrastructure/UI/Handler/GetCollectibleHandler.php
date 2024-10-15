@@ -25,12 +25,14 @@ class GetCollectibleHandler implements RequestHandlerInterface
     $query = FindCollectibleByIdQuery::create($id);
     $result = $this->findCollectibleByIdQueryHandler->execute($query);
 
+    //TODO: Exception
     if (!is_null($result)) {
       $response->getBody()->write(json_encode($result->toArray()));  
     } else {
       $response->getBody()->write(json_encode(["error" => "Collectible not found"]));
       $response = $response->withStatus(404);
     }
+    
     return $response;
   }
 }
