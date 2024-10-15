@@ -68,7 +68,7 @@ class UserPostgresqlRepository implements UserRepository
     $users = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     if (count($users) == 0) {
-      return null;
+      return null;//TODO: Exception
     }
     
     return $this->toObject(current($users));

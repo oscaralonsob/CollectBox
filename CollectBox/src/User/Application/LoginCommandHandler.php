@@ -19,7 +19,7 @@ class LoginCommandHandler
     $user = $this->userRepository->searchByUserName(UserName::create($command->userName()));
 
     if ($user?->password()->value() != $command->password()) {
-      return null;
+      return null;//TODO: Exception
     }
   
     return $user;
