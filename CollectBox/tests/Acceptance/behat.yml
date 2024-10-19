@@ -1,0 +1,13 @@
+default:
+  suites:
+    home:
+      paths: [ Home ]
+      contexts:
+        - Tests\Infrastructure\Acceptance\Home\HomeContext
+  
+  extensions:
+    Behat\MinkExtension:
+        base_url: 'http://127.0.0.1'
+        sessions:
+          default:
+            browserkit_http: ~
