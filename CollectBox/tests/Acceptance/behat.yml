@@ -3,6 +3,7 @@ default:
     home:
       paths: [ Home ]
       contexts:
+        - Tests\Infrastructure\Acceptance\ApiContext
         - Tests\Infrastructure\Acceptance\Home\HomeContext
   
   extensions:
