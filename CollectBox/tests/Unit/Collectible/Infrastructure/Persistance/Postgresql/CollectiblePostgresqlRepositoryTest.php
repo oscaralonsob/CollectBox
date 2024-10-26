@@ -7,7 +7,7 @@ namespace Tests\Unit\Collectible\Infrastructure\Persistance\Postgresql;
 
 use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Infrastructure\Persistance\Postgresql\CollectiblePostgresqlRepository;
-use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Aggregate\CollectibleStub;
 use Tests\Infrastructure\DataFixtures\DataLoader\CollectibleFixtures;
 use Tests\Infrastructure\TestCase\RepositoryTestCase;
 

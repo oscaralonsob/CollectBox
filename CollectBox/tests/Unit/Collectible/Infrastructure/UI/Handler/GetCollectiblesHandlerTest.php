@@ -9,7 +9,7 @@ use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Infrastructure\UI\Handler\GetCollectiblesHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ServerRequestInterface;
-use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCollectionStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Entity\CollectibleCollectionStub;
 use Tests\Infrastructure\TestCase\BaseTestCase;
 
 class GetCollectiblesHandlerTest extends BaseTestCase

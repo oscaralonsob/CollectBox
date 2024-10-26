@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Infrastructure\Collectible\Domain\Entity;
+namespace Tests\Infrastructure\Context\Collectible\Domain\Entity;
 
 use App\Collectible\Domain\Entity\CollectibleCollection;
-use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Aggregate\CollectibleStub;
 
 class CollectibleCollectionStub
 {

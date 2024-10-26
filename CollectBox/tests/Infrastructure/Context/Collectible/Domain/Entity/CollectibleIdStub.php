@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Infrastructure\Collectible\Domain\Entity;
+namespace Tests\Infrastructure\Context\Collectible\Domain\Entity;
 
 use App\Collectible\Domain\Entity\CollectibleId;
 use Faker\Factory;

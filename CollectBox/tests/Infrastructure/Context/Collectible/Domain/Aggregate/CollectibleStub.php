@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Tests\Infrastructure\Collectible\Domain\Aggregate;
+namespace Tests\Infrastructure\Context\Collectible\Domain\Aggregate;
 
 use App\Collectible\Domain\Aggregate\Collectible;
 use App\Collectible\Domain\Entity\CollectibleCode;
 use App\Collectible\Domain\Entity\CollectibleId;
 use App\Collectible\Domain\Entity\CollectibleName;
 use App\Collectible\Domain\Entity\CollectibleUrl;
-use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCodeStub;
-use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleIdStub;
-use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleNameStub;
-use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleUrlStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Entity\CollectibleCodeStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Entity\CollectibleIdStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Entity\CollectibleNameStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Entity\CollectibleUrlStub;
 
 class CollectibleStub
 {

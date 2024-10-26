@@ -8,7 +8,7 @@ use App\Collectible\Application\SearchCollectiblesQuery;
 use App\Collectible\Application\SearchCollectiblesQueryHandler;
 use App\Collectible\Domain\Repository\CollectibleRepository;
 use PHPUnit\Framework\MockObject\MockObject;
-use Tests\Infrastructure\Collectible\Domain\Entity\CollectibleCollectionStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Entity\CollectibleCollectionStub;
 use Tests\Infrastructure\TestCase\BaseTestCase;
 
 class SearchCollectiblesQueryHandlerTest extends BaseTestCase

@@ -7,7 +7,7 @@ namespace Tests\Unit\Collectible\Domain\Entity;
 use App\Collectible\Domain\Entity\CollectibleCollection;
 use App\Shared\Domain\Exception\CollectionInvalidTypeException;
 use stdClass;
-use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Aggregate\CollectibleStub;
 use Tests\Infrastructure\TestCase\BaseTestCase;
 
 class CollectibleCollectionTest extends BaseTestCase

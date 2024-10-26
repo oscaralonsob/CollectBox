@@ -8,7 +8,7 @@ use App\Collectible\Application\FindCollectibleByIdQueryHandler;
 use App\Collectible\Infrastructure\UI\Handler\GetCollectibleHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ServerRequestInterface;
-use Tests\Infrastructure\Collectible\Domain\Aggregate\CollectibleStub;
+use Tests\Infrastructure\Context\Collectible\Domain\Aggregate\CollectibleStub;
 use Tests\Infrastructure\TestCase\BaseTestCase;
 
 class GetCollectibleHandlerTest extends BaseTestCase
