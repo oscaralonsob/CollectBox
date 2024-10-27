@@ -5,6 +5,11 @@ default:
       contexts:
         - Tests\Infrastructure\Acceptance\ApiContext
         - Tests\Infrastructure\Acceptance\Home\HomeContext
+    collectible:
+      paths: [ Collectible ]
+      contexts:
+        - Tests\Infrastructure\Acceptance\ApiContext
+        - Tests\Infrastructure\Acceptance\Collectible\CollectibleContext
   
   extensions:
     Behat\MinkExtension:

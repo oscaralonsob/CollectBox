@@ -6,8 +6,6 @@ namespace Tests\Infrastructure\Acceptance;
 
 use Behat\MinkExtension\Context\MinkContext;
 
-use function PHPUnit\Framework\assertEquals;
-
 class ApiContext extends MinkContext
 {
     /**
@@ -19,11 +17,21 @@ class ApiContext extends MinkContext
     }
 
     /**
-     * @Then /^the response is "(?P<text>(?:[^"]|\\")*)"$/
+     * @Then /^the response is:$/
      */
     public function thenTheResponseIs(string $text)
     {
-        $response = json_decode($this->getSession()->getPage()->getContent());
-        assertEquals($response->msg, $text);
+        $actualResponse = json_decode($this->getSession()->getPage()->getContent());
+        $expectedResponse = json_decode($text);
+
+        \PHPUnit\Framework\Assert::assertEquals($expectedResponse, $actualResponse);
+    }
+
+    /**
+     * @Then /^404 is returned/
+     */
+    public function then404IsReturned()
+    {
+        \PHPUnit\Framework\Assert::assertEquals(404, $this->getSession()->getStatusCode());
     }
 }

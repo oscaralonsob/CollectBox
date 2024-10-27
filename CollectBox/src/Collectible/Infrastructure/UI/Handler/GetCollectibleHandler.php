@@ -6,6 +6,7 @@ namespace App\Collectible\Infrastructure\UI\Handler;
 
 use App\Collectible\Application\FindCollectibleByIdQuery;
 use App\Collectible\Application\FindCollectibleByIdQueryHandler;
+use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -23,16 +24,15 @@ class GetCollectibleHandler implements RequestHandlerInterface
     $id = $request->getAttribute('id');
 
     $query = FindCollectibleByIdQuery::create($id);
-    $result = $this->findCollectibleByIdQueryHandler->execute($query);
+    try {
+      $result = $this->findCollectibleByIdQueryHandler->execute($query);
 
-    //TODO: Exception
-    if (!is_null($result)) {
       $response->getBody()->write(json_encode($result->toArray()));  
-    } else {
+    } catch (CollectibleNotFoundException $e) {
       $response->getBody()->write(json_encode(["error" => "Collectible not found"]));
       $response = $response->withStatus(404);
     }
-    
+
     return $response;
   }
 }

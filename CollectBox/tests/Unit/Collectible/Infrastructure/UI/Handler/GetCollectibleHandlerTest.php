@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Collectible\Infrastructure\UI\Handler;
 
 use App\Collectible\Application\FindCollectibleByIdQueryHandler;
+use App\Collectible\Domain\Exception\CollectibleNotFoundException;
 use App\Collectible\Infrastructure\UI\Handler\GetCollectibleHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ServerRequestInterface;
@@ -52,7 +53,7 @@ class GetCollectibleHandlerTest extends BaseTestCase
   {
     $collectible = CollectibleStub::random();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
-    $this->findCollectibleByIdQueryHandler->method('execute')->willReturn(null);//TODO: Exception
+    $this->findCollectibleByIdQueryHandler->method('execute')->willThrowException(CollectibleNotFoundException::create($collectible->id()));
 
     $response = $this->getCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();
@@ -64,7 +65,7 @@ class GetCollectibleHandlerTest extends BaseTestCase
   {
     $collectible = CollectibleStub::random();
     $this->request->method('getAttribute')->willReturn($collectible->id()->value());
-    $this->findCollectibleByIdQueryHandler->method('execute')->willReturn(null);
+    $this->findCollectibleByIdQueryHandler->method('execute')->willThrowException(CollectibleNotFoundException::create($collectible->id()));
 
     $response = $this->getCollectibleHandler->handle($this->request);
     $response->getBody()->rewind();
